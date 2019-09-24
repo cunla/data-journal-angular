@@ -15,8 +15,15 @@
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="input-style col col-md-2">
-      <input formControlName="country" matInput placeholder="Country">
+
+    <mat-form-field class="input-style col col-md-3">
+      <input type="text" placeholder="Pick a country" aria-label="Country"
+             matInput formControlName="country" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="input-style col col-md-3">
