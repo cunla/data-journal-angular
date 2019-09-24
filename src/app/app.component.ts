@@ -1,18 +1,23 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {UserService} from './auth/user.service';
+import {Component} from '@angular/core';
+import {AuthService} from './auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private user: any;
 
-  constructor(private userService: UserService) {
-    this.userService.getUserFromFirebase().subscribe((user) => {
-      this.user = user;
+  constructor(private auth: AuthService,
+              private router: Router,
+  ) {
+
+  }
+
+  logout() {
+    this.auth.doLogout().then(() => {
+      this.router.navigate(['/auth']).then();
     });
   }
 }

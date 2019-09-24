@@ -1,0 +1,19 @@
+<div class="row" *ngIf="!trip.editMode">
+  <div class="col col-md-2">
+    {{trip.start.toDate() | date: 'yyyy-MM-dd'}}
+  </div>
+  <div class="col col-md-2">
+    {{trip.end.toDate() | date: 'yyyy-MM-dd'}}
+  </div>
+  <div class="col col-md-2">
+    {{trip.country}}
+  </div>
+  <div class="col col-md-2">
+    {{trip.purpose}}
+  </div>
+  <div class="col col-md-3">
+    <fa-icon icon="edit" (click)="trip.editMode=true"></fa-icon>
+    <fa-icon icon="trash" [styles]="{'color':'#cc1111'}" (click)="delete()"></fa-icon>
+  </div>
+</div>
+<app-edit-trip [trip]="trip" *ngIf="trip.editMode"></app-edit-trip>

@@ -54,6 +54,6 @@ export class LoginComponent {
   }
 
   private navigateToUserScreen() {
-    this.router.navigate(['/user']).then();
+    this.router.navigate(['/home']).then();
   }
 }

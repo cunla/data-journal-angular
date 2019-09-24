@@ -1,5 +1,19 @@
-<main>
+<div class="page-container">
+  <div class="side-bar">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="home/accounts">
+          <fa-icon icon="file-invoice"></fa-icon>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav flex-column">
+      <li (click)="logout()" class="nav-item nav-link">
+        <fa-icon icon="sign-out-alt"></fa-icon>
+      </li>
+    </ul>
+  </div>
   <div class="content-container">
     <router-outlet></router-outlet>
   </div>
-</main>
+</div>

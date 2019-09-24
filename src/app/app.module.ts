@@ -1,31 +1,39 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {rootRouterConfig} from './app.routes';
-import {UserComponent} from './user/user.component';
-import {ReactiveFormsModule} from '@angular/forms';
-
 import {AppComponent} from './app.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './auth/auth.module';
-import {UserResolver} from './user/user.resolver';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {HomeModule} from './home/home.module';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
   ],
   imports: [
+    HomeModule,
     AuthModule,
-    RouterModule.forRoot(rootRouterConfig, {useHash: false}),
     BrowserModule,
-    ReactiveFormsModule,
-    AngularFontAwesomeModule,
+    RouterModule.forRoot(rootRouterConfig, {useHash: false}),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
+    BrowserAnimationsModule,
+    FontAwesomeModule,
   ],
-  providers: [
-    UserResolver,
-  ],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule {
+  constructor() {
+    // Add an icon to the library for convenient access in other components
+    // library.add(fas);
+  }
 }

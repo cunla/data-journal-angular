@@ -1,0 +1,30 @@
+
+<div class="row">
+  <form (ngSubmit)="onSubmit(tripForm.value)"
+        [formGroup]="tripForm" class="edit-form" novalidate>
+
+    <mat-form-field class="col col-md-2">
+      <input formControlName="start" matInput [matDatepicker]="picker1" placeholder="Starting date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col col-md-2">
+      <input formControlName="end" matInput [matDatepicker]="picker2" placeholder="Ending date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="input-style col col-md-2">
+      <input formControlName="country" matInput placeholder="Country">
+    </mat-form-field>
+
+    <mat-form-field class="input-style col col-md-3">
+      <input formControlName="purpose" matInput placeholder="Purpose">
+    </mat-form-field>
+
+    <button color="primary" mat-raised-button type="submit">
+      <fa-icon icon="save"></fa-icon>
+    </button>
+  </form>
+</div>

@@ -5,8 +5,22 @@ import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
+  user: firebase.User;
 
   constructor(public afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(this.user));
+      } else {
+        localStorage.setItem('user', null);
+      }
+    });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user !== null;
   }
 
   doFacebookLogin() {
@@ -39,5 +53,6 @@ export class AuthService {
   private loginWithProvider(provider) {
     return this.afAuth.auth.signInWithPopup(provider);
   }
+
 
 }

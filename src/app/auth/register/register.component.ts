@@ -61,6 +61,6 @@ export class RegisterComponent {
   }
 
   private navigateToUserScreen() {
-    this.router.navigate(['/user']).then();
+    this.router.navigate(['/home']).then();
   }
 }
