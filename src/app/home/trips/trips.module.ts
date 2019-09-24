@@ -14,6 +14,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {AuthModule} from '../../auth/auth.module';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -27,6 +28,7 @@ const routes: Routes = [
     TripComponent,
   ],
   imports: [
+    AuthModule,
     CommonModule,
     RouterModule.forChild(routes),
     FontAwesomeModule,

@@ -23,6 +23,11 @@ export class AuthService {
     return user !== null;
   }
 
+  get userId() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.uid;
+  }
+
   doFacebookLogin() {
     return this.loginWithProvider(new firebase.auth.FacebookAuthProvider());
   }

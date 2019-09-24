@@ -7,8 +7,7 @@ import {EMPTY_TRIP, TripInterface, TripsService} from '../trips.service';
   styleUrls: ['./trips-list.component.scss']
 })
 export class TripsListComponent implements OnInit {
-
-  searchValue: string = '';
+  searchValue = '';
   newTrip: TripInterface = EMPTY_TRIP;
   items: Array<any>;
   name_filtered_items: Array<any>;
@@ -23,7 +22,7 @@ export class TripsListComponent implements OnInit {
 
   searchByName() {
     const value = this.searchValue.toLowerCase();
-    this.trips.init('trips', 'country', {
+    this.trips.init('trips', 'start', {
       reverse: false, prepend: false, searchValue: value,
     });
   }

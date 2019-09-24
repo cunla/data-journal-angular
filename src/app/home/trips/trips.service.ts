@@ -7,6 +7,7 @@ import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import * as firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
+import {AuthService} from '../../auth/auth.service';
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -53,7 +54,8 @@ export class TripsService {
   loading: Observable<boolean> = this._loading.asObservable();
 
 
-  constructor(public db: AngularFirestore) {
+  constructor(public db: AngularFirestore,
+              private auth: AuthService) {
     this.init('trips', 'start', {reverse: false, prepend: false});
   }
 
@@ -61,8 +63,8 @@ export class TripsService {
   // passing opts will override the defaults
   init(path: string, field: string, opts?: any) {
     this.query = {
-      path,
-      field,
+      path: path,
+      field: field,
       limit: 50,
       reverse: false,
       prepend: false,
@@ -70,7 +72,7 @@ export class TripsService {
       filter: true,
       ...opts
     };
-    const first = this.db.collection(this.query.path, ref => {
+    const first = this.userDoc().collection(this.query.path, ref => {
       return this.queryFn(ref);
     });
     this.data = null;
@@ -152,19 +154,25 @@ export class TripsService {
 
 
   get(key) {
-    return this.db.collection(this.query.path).doc(key).snapshotChanges();
+    return this.userDoc().collection(this.query.path).doc(key).snapshotChanges();
   }
 
   update(key, value) {
-    return this.db.collection(this.query.path).doc(key).set(value);
+    return this.userDoc().collection(this.query.path).doc(key).set(value);
   }
 
   delete(key) {
-    return this.db.collection(this.query.path).doc(key).delete();
+    return this.userDoc().collection(this.query.path).doc(key).delete();
   }
 
   create(value) {
-    return this.db.collection(this.query.path).add(value);
+    return this.userDoc().collection(this.query.path).add(value);
+  }
+
+  private userDoc() {
+    return this.db
+      .collection('users')
+      .doc(this.auth.userId);
   }
 
 }

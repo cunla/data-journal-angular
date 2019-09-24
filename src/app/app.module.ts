@@ -33,7 +33,5 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 })
 export class AppModule {
   constructor() {
-    // Add an icon to the library for convenient access in other components
-    // library.add(fas);
   }
 }
