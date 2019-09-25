@@ -9,12 +9,11 @@ import {EditTripComponent} from './edit-trip/edit-trip.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {TripComponent} from './trip/trip.component';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {AuthModule} from '../../auth/auth.module';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -28,7 +27,6 @@ const routes: Routes = [
     TripComponent,
   ],
   imports: [
-    AuthModule,
     CommonModule,
     RouterModule.forChild(routes),
     FontAwesomeModule,

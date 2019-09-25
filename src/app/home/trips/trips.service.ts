@@ -6,8 +6,8 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import * as firebase from 'firebase/app';
+import {AngularFireAuth} from '@angular/fire/auth';
 import Timestamp = firebase.firestore.Timestamp;
-import {AuthService} from '../../auth/auth.service';
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -52,10 +52,13 @@ export class TripsService {
   data: Observable<TripInterface[]>;
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
+  private userId: string;
 
 
   constructor(public db: AngularFirestore,
-              private auth: AuthService) {
+              public afAuth: AngularFireAuth) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.userId = user.uid;
     this.init('trips', 'start', {reverse: false, prepend: false});
   }
 
@@ -172,7 +175,7 @@ export class TripsService {
   private userDoc() {
     return this.db
       .collection('users')
-      .doc(this.auth.userId);
+      .doc(this.userId);
   }
 
 }
