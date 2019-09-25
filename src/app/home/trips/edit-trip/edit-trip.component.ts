@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TripInterface, TripsService} from '../trips.service';
+import {EMPTY_TRIP, TripInterface, TripsService} from '../trips.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -30,6 +30,7 @@ export class EditTripComponent implements OnInit {
       this.trips.create(value).then(
         res => {
           this.trips.refresh();
+          this.trip = EMPTY_TRIP;
         }
       );
     } else {
