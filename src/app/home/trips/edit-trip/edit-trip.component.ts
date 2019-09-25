@@ -13,12 +13,15 @@ import {countries} from 'typed-countries';
 export class EditTripComponent implements OnInit {
   @Input() trip: TripInterface;
   tripForm: FormGroup;
-  filteredOptions: Observable<string[]>;
+  filteredOptions: Observable<string[][]>;
+  nameToIsoMap: Map<string, string>;
 
   constructor(public trips: TripsService,
               private fb: FormBuilder,
   ) {
-
+    this.nameToIsoMap = new Map<string, string>(
+      countries.map(option => [option.name, option.iso.toLowerCase()] as [string, string])
+    );
   }
 
   ngOnInit() {
@@ -26,7 +29,9 @@ export class EditTripComponent implements OnInit {
   }
 
   onSubmit(value) {
+    value.countryCode = this.nameToIsoMap.get(value.country);
     if (this.trip.id === null || this.trip.id === undefined) {
+      console.log('Saving trip', value);
       this.trips.create(value).then(
         res => {
           this.trips.refresh();
@@ -56,11 +61,11 @@ export class EditTripComponent implements OnInit {
     );
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string): string[][] {
     const filterValue = value.toLowerCase();
     return countries
       .filter(option => option.name.toLowerCase().indexOf(filterValue) === 0
         || option.iso.toLowerCase().indexOf(filterValue) === 0)
-      .map(option => option.name);
+      .map(option => [option.name, option.iso.toLowerCase()]);
   }
 }

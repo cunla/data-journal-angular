@@ -24,6 +24,7 @@ export interface TripInterface {
   id: number;
   start: Timestamp;
   end: Timestamp;
+  countryCode: string;
   country: string;
   purpose: string;
 }
@@ -31,6 +32,7 @@ export interface TripInterface {
 export const EMPTY_TRIP: TripInterface = {
   editMode: false,
   id: null,
+  countryCode: '',
   country: '',
   purpose: '',
   start: null,

@@ -1,4 +1,3 @@
-
 <div class="row">
   <form (ngSubmit)="onSubmit(tripForm.value)"
         [formGroup]="tripForm" class="edit-form" novalidate>
@@ -20,8 +19,9 @@
       <input type="text" placeholder="Pick a country" aria-label="Country"
              matInput formControlName="country" [matAutocomplete]="auto">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
+          <span [class]="'flag-icon flag-icon-'+option[1]"></span>
+          {{option[0]}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

@@ -5,13 +5,18 @@
   <div class="col col-md-2">
     {{trip.end.toDate() | date: 'yyyy-MM-dd'}}
   </div>
+  <div class="col col-md-1">
+    {{daysDiff(trip.start.toDate(), trip.end.toDate())}}
+  </div>
   <div class="col col-md-2">
+    <span *ngIf="trip.countryCode"
+          [class]="'flag-icon flag-icon-'+trip.countryCode"></span>
     {{trip.country}}
   </div>
   <div class="col col-md-3">
     {{trip.purpose}}
   </div>
-  <div class="col col-md-3">
+  <div class="col col-md-1">
     <fa-icon icon="edit" (click)="trip.editMode=true"></fa-icon>
     <fa-icon icon="trash" [styles]="{'color':'#cc1111'}" (click)="delete()"></fa-icon>
   </div>
