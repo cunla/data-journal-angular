@@ -9,9 +9,6 @@ import {EMPTY_TRIP, TripInterface, TripsService} from '../trips.service';
 export class TripsListComponent implements OnInit {
   searchValue = '';
   newTrip: TripInterface = EMPTY_TRIP;
-  items: Array<any>;
-  name_filtered_items: Array<any>;
-
 
   constructor(public trips: TripsService,
   ) {

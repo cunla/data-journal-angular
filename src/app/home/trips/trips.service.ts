@@ -52,7 +52,7 @@ export class TripsService {
   data: Observable<TripInterface[]>;
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
-  private userId: string;
+  private readonly userId: string;
 
 
   constructor(public db: AngularFirestore,
@@ -75,22 +75,7 @@ export class TripsService {
       filter: true,
       ...opts
     };
-    const first = this.userDoc().collection(this.query.path, ref => {
-      return this.queryFn(ref);
-    });
-    this.data = null;
-    this._done.next(false);
-    this._loading.next(false);
-    this._data = new BehaviorSubject([]);
-    this.mapAndUpdate(first);
-    // Create the observable array for consumption in components
-    this.data = this._data.asObservable().scan((acc, values) => {
-      const val = values.filter(item => {
-        return item.country.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.purpose.toLowerCase().indexOf(this.query.searchValue) !== -1;
-      });
-      return this.query.prepend ? val.concat(acc) : acc.concat(val);
-    });
+    this.refresh();
   }
 
   // Retrieves additional data from firestore
@@ -172,10 +157,28 @@ export class TripsService {
     return this.userDoc().collection(this.query.path).add(value);
   }
 
+  refresh() {
+    const first = this.userDoc().collection(this.query.path, ref => {
+      return this.queryFn(ref);
+    });
+    this.data = null;
+    this._done.next(false);
+    this._loading.next(false);
+    this._data = new BehaviorSubject([]);
+    this.mapAndUpdate(first);
+    // Create the observable array for consumption in components
+    this.data = this._data.asObservable().scan((acc, values) => {
+      const val = values.filter(item => {
+        return item.country.toLowerCase().indexOf(this.query.searchValue) !== -1
+          || item.purpose.toLowerCase().indexOf(this.query.searchValue) !== -1;
+      });
+      return this.query.prepend ? val.concat(acc) : acc.concat(val);
+    });
+  }
+
   private userDoc() {
     return this.db
       .collection('users')
       .doc(this.userId);
   }
-
 }

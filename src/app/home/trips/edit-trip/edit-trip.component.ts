@@ -29,12 +29,14 @@ export class EditTripComponent implements OnInit {
     if (this.trip.id === null || this.trip.id === undefined) {
       this.trips.create(value).then(
         res => {
+          this.trips.refresh();
         }
       );
     } else {
       this.trips.update(this.trip.id, value).then(
         () => {
           this.trip.editMode = false;
+          this.trips.refresh();
         }
       );
     }

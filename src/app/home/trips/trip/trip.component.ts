@@ -18,6 +18,7 @@ export class TripComponent implements OnInit {
   delete() {
     this.trips.delete(this.trip.id).then(
       () => {
+        this.trips.refresh();
       }, err => {
         console.log(err);
       });
