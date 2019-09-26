@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TripInterface, TripsService} from '../trips.service';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-trip',
@@ -12,7 +13,9 @@ export class TripComponent implements OnInit {
   constructor(private trips: TripsService) {
   }
 
-  daysDiff(date1: Date, date2: Date): number {
+  daysDiff(t1: Timestamp, t2: Timestamp): number {
+    const date1 = t1.toDate();
+    const date2 = t2 ? t2.toDate() : new Date();
     const diff = Math.abs(date1.getTime() - date2.getTime());
     return Math.ceil(diff / (1000 * 3600 * 24));
   }

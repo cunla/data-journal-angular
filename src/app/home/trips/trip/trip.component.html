@@ -3,10 +3,10 @@
     {{trip.start.toDate() | date: 'yyyy-MM-dd'}}
   </div>
   <div class="col col-md-2">
-    {{trip.end.toDate() | date: 'yyyy-MM-dd'}}
+    {{trip.end ? (trip.end.toDate() | date: 'yyyy-MM-dd') : '' }}
   </div>
   <div class="col col-md-1">
-    {{daysDiff(trip.start.toDate(), trip.end.toDate())}}
+    {{daysDiff(trip.start, trip.end)}}
   </div>
   <div class="col col-md-2">
     <span *ngIf="trip.countryCode"
