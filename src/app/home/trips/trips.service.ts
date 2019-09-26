@@ -20,6 +20,7 @@ export interface QueryConfig {
 }
 
 export interface TripInterface {
+  city: string;
   editMode: boolean;
   id: number;
   start: Timestamp;
@@ -37,6 +38,7 @@ export const EMPTY_TRIP: TripInterface = {
   purpose: '',
   start: null,
   end: null,
+  city: '',
 };
 
 @Injectable({
