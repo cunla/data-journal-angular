@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TripInterface, TripsService} from '../trips.service';
+// import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/app';
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
