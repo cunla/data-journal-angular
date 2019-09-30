@@ -65,7 +65,7 @@ export class TripsService {
               public afAuth: AngularFireAuth) {
     const user = JSON.parse(localStorage.getItem('user'));
     this.userId = user.uid;
-    this.init('trips', 'start', {reverse: false, prepend: false});
+    this.init('trips', 'start', {reverse: true, prepend: false});
   }
 
   // Initial query sets options and defines the Observable
@@ -75,7 +75,7 @@ export class TripsService {
       path: path,
       field: field,
       limit: 50,
-      reverse: false,
+      reverse: true,
       prepend: false,
       searchValue: '',
       filter: true,
