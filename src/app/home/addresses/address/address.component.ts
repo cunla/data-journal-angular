@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-address',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./address.component.scss']
 })
 export class AddressComponent implements OnInit {
+  address: Object;
+  formattedAddress: string;
 
-  constructor() { }
+  constructor(public zone: NgZone) {
+  }
 
   ngOnInit() {
   }
+
 
 }

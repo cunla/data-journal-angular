@@ -4,6 +4,10 @@ import {AddressListComponent} from './list/address-list.component';
 import {AddressComponent} from './address/address.component';
 import {EditAddressComponent} from './edit-address/edit-address.component';
 import {RouterModule, Routes} from "@angular/router";
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import {FormsModule} from "@angular/forms";
+import {AgmCoreModule} from "@agm/core";
+import {environment} from "../../../environments/environment";
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -16,10 +20,16 @@ const routes: Routes = [
     AddressListComponent,
     AddressComponent,
     EditAddressComponent,
+    AutocompleteComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.placesApiKey,
+      libraries: ["places"],
+    })
   ]
 })
 export class AddressesModule {
