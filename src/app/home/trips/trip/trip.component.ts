@@ -15,9 +15,8 @@ export class TripComponent implements OnInit {
   constructor(private trips: TripsService) {
   }
 
-  daysDiff(t1: Timestamp, t2: Timestamp): number {
-    const date1 = t1.toDate();
-    const date2 = t2 ? t2.toDate() : new Date();
+  daysDiff(date1: Date, date2: Date): number {
+    date2 = date2 ? date2 : new Date();
     const diff = Math.abs(date1.getTime() - date2.getTime());
     return Math.ceil(diff / (1000 * 3600 * 24));
   }

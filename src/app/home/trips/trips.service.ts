@@ -26,17 +26,21 @@ export interface TripInterface {
   end: Timestamp;
   countryCode: string;
   country: string;
+  state: string;
+  city: string;
   purpose: string;
 }
 
 export const EMPTY_TRIP: TripInterface = {
   editMode: false,
   id: null,
-  countryCode: '',
-  country: '',
-  purpose: '',
   start: null,
   end: null,
+  countryCode: '',
+  country: '',
+  state: '',
+  city: '',
+  purpose: '',
 };
 
 @Injectable({
@@ -123,6 +127,8 @@ export class TripsService {
           const data = snap.payload.doc.data();
           data.id = snap.payload.doc.id;
           const doc = snap.payload.doc;
+          data.start = data.start ? data.start.toDate():null;
+          data.end = data.end ? data.end.toDate():null;
           return {...data, doc};
         });
 
