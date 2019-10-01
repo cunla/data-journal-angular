@@ -22,8 +22,8 @@ export interface QueryConfig {
 export interface TripInterface {
   editMode: boolean;
   id: number;
-  start: Timestamp;
-  end: Timestamp;
+  start: Date;
+  end: Date;
   countryCode: string;
   country: string;
   state: string;
