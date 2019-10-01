@@ -19,7 +19,7 @@ export interface QueryConfig {
   filter: boolean;
 }
 
-export interface TripInterface {
+export interface AddressInterface {
   editMode: boolean;
   id: number;
   start: Timestamp;
@@ -31,7 +31,7 @@ export interface TripInterface {
   purpose: string;
 }
 
-export const EMPTY_TRIP: TripInterface = {
+export const EMPTY_ADDRESS: AddressInterface = {
   editMode: false,
   id: null,
   start: null,
@@ -55,7 +55,7 @@ export class TripsService {
   private query: QueryConfig;
 
   // Observable data
-  data: Observable<TripInterface[]>;
+  data: Observable<AddressInterface[]>;
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
   private readonly userId: string;
@@ -65,7 +65,7 @@ export class TripsService {
               public afAuth: AngularFireAuth) {
     const user = JSON.parse(localStorage.getItem('user'));
     this.userId = user.uid;
-    this.init('trips', 'start', {reverse: true, prepend: false});
+    this.init('trips', 'start', {reverse: false, prepend: false});
   }
 
   // Initial query sets options and defines the Observable
@@ -75,7 +75,7 @@ export class TripsService {
       path: path,
       field: field,
       limit: 50,
-      reverse: true,
+      reverse: false,
       prepend: false,
       searchValue: '',
       filter: true,

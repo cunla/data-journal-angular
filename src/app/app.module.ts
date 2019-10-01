@@ -10,12 +10,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './auth/auth.module';
 import {HomeModule} from './home/home.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {PrivacyPolicyModule} from "./privacy-policy/privacy-policy.module";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    PrivacyPolicyModule,
     HomeModule,
     AuthModule,
     BrowserModule,

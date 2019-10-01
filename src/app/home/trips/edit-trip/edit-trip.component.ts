@@ -51,10 +51,11 @@ export class EditTripComponent implements OnInit {
   private createForm() {
     this.tripForm = this.fb.group({
       country: [this.trip.country, Validators.required],
-      purpose: [this.trip.purpose],
-      city: [this.trip.purpose],
-      start: [this.trip.start ? this.trip.start.toDate() : null, Validators.required],
-      end: [this.trip.end ? this.trip.start.toDate() : null],
+      state: [this.trip.state,],
+      city: [this.trip.city,],
+      purpose: [this.trip.purpose, Validators.required],
+      start: [this.trip.start, Validators.required],
+      end: [this.trip.end,],
     });
     this.filteredOptions = this.tripForm.get('country').valueChanges.pipe(
       startWith(''),
