@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {countries} from 'typed-countries';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-trip',
@@ -30,6 +31,8 @@ export class EditTripComponent implements OnInit {
 
   onSubmit(value) {
     value.countryCode = this.nameToIsoMap.get(value.country);
+    value.start = moment(value.start).toDate();
+    value.end = value.end ? moment(value.end).toDate() : value.end;
     if (this.trip.id === null || this.trip.id === undefined) {
       console.log('Saving trip', value);
       this.trips.create(value).then(
