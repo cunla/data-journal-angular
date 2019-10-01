@@ -127,8 +127,8 @@ export class TripsService {
           const data = snap.payload.doc.data();
           data.id = snap.payload.doc.id;
           const doc = snap.payload.doc;
-          data.start = data.start ? data.start.toDate():null;
-          data.end = data.end ? data.end.toDate():null;
+          data.start = data.start ? data.start.toDate() : null;
+          data.end = data.end ? data.end.toDate() : null;
           return {...data, doc};
         });
 
