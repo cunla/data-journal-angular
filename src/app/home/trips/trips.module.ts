@@ -15,10 +15,12 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {HomeGuard} from '../guard/home.guard';
+import {HomeGuardModule} from '../guard/home.guard.module';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
-  {path: 'list', component: TripsListComponent},
+  {path: 'list', component: TripsListComponent, canActivate: [HomeGuard]},
 ];
 
 // See the Moment.js docs for the meaning of these formats:
@@ -55,6 +57,7 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
+    HomeGuardModule,
   ],
   providers: [
     MatDatepickerModule,
