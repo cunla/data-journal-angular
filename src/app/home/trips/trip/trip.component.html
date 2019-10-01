@@ -8,7 +8,7 @@
   <div class="col col-md-1">
     {{daysDiff(trip.start, trip.end)}}
   </div>
-  <div class="col col-md-2">
+  <div class="col col-md-3">
     <span *ngIf="trip.countryCode"
           [class]="'flag-icon flag-icon-'+trip.countryCode"></span>
     {{trip.country}} <span *ngIf="trip.state">({{trip.state}})</span>

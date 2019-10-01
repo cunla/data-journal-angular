@@ -25,7 +25,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     AgmCoreModule.forRoot({
-      apiKey: environment.placesApiKey,
+      apiKey: environment.firebase.apiKey,
       libraries: ['places'],
     })
   ]
