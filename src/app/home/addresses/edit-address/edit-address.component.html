@@ -1,1 +1,40 @@
-<p>edit-address works!</p>
+<div class="row">
+  <form (ngSubmit)="onSubmit(addressForm.value)"
+        [formGroup]="addressForm" class="edit-form" novalidate>
+
+    <mat-form-field class="col col-md-2">
+      <input formControlName="start" matInput [matDatepicker]="picker1" placeholder="Starting date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col col-md-2">
+      <input formControlName="end" matInput [matDatepicker]="picker2" placeholder="Ending date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="input-style col col-md-3">
+      <input type="text" placeholder="Pick a country" aria-label="Country"
+             matInput formControlName="country" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
+          <span [class]="'flag-icon flag-icon-'+option[1]"></span>
+          {{option[0]}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="input-style col col-md-1">
+      <input formControlName="city" matInput placeholder="City">
+    </mat-form-field>
+
+    <mat-form-field class="input-style col col-md-3">
+      <input formControlName="address" matInput placeholder="Address">
+    </mat-form-field>
+
+    <button color="primary" mat-raised-button type="submit">
+      <fa-icon icon="save"></fa-icon>
+    </button>
+  </form>
+</div>

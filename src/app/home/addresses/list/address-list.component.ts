@@ -1,4 +1,5 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ADDRESS_HISTORY_PATH, AddressInterface, AddressService, EMPTY_ADDRESS} from '../address.service';
 
 @Component({
   selector: 'app-list',
@@ -6,18 +7,21 @@ import {Component, NgZone, OnInit} from '@angular/core';
   styleUrls: ['./address-list.component.scss']
 })
 export class AddressListComponent implements OnInit {
-  address: Object;
-  formattedAddress: string;
+  searchValue = '';
+  newAddress: AddressInterface = EMPTY_ADDRESS;
 
-  constructor(public zone: NgZone) {
+  constructor(public addressService: AddressService,
+  ) {
   }
 
   ngOnInit() {
   }
 
-  getAddress(place: object) {
-    this.address = place['formatted_address'];
-    this.formattedAddress = place['formatted_address'];
-    this.zone.run(() => this.formattedAddress = place['formatted_address']);
+  searchByName() {
+    const value = this.searchValue.toLowerCase();
+    this.addressService.init(ADDRESS_HISTORY_PATH, 'start', {
+      reverse: true, prepend: false, searchValue: value,
+    });
   }
+
 }

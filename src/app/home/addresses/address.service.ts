@@ -7,7 +7,8 @@ import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
-import Timestamp = firebase.firestore.Timestamp;
+
+export const ADDRESS_HISTORY_PATH = 'address-history';
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -22,13 +23,13 @@ export interface QueryConfig {
 export interface AddressInterface {
   editMode: boolean;
   id: number;
-  start: Timestamp;
-  end: Timestamp;
+  start: Date;
+  end: Date;
   countryCode: string;
   country: string;
   state: string;
   city: string;
-  purpose: string;
+  address: string;
 }
 
 export const EMPTY_ADDRESS: AddressInterface = {
@@ -40,13 +41,13 @@ export const EMPTY_ADDRESS: AddressInterface = {
   country: '',
   state: '',
   city: '',
-  purpose: '',
+  address: '',
 };
 
 @Injectable({
   providedIn: 'root'
 })
-export class TripsService {
+export class AddressService {
   // Source data
   private _done = new BehaviorSubject(false);
   private _loading = new BehaviorSubject(false);
@@ -60,12 +61,11 @@ export class TripsService {
   loading: Observable<boolean> = this._loading.asObservable();
   private readonly userId: string;
 
-
   constructor(public db: AngularFirestore,
               public afAuth: AngularFireAuth) {
     const user = JSON.parse(localStorage.getItem('user'));
     this.userId = user.uid;
-    this.init('trips', 'start', {reverse: false, prepend: false});
+    this.init(ADDRESS_HISTORY_PATH, 'start', {reverse: false, prepend: false});
   }
 
   // Initial query sets options and defines the Observable

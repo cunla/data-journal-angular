@@ -1,1 +1,32 @@
-<p></p>
+<div class="row" *ngIf="!address.editMode">
+  <div class="col col-md-4">
+    <div class="row">
+      <div class="col col-md-5">
+        {{address.start | date: 'yyyy-MM-dd'}}
+      </div>
+      <div class="col col-md-5">
+        {{address.end | date: 'yyyy-MM-dd'}}
+      </div>
+      <div class="col col-md-2">
+        {{daysDiff(address.start, address.end)}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col col-md-2">
+    <span *ngIf="address.countryCode"
+          [class]="'flag-icon flag-icon-'+address.countryCode"></span>
+    {{address.country}} <span *ngIf="address.state">({{address.state}})</span>
+  </div>
+  <div class="col col-md-1">
+    {{address.city}}
+  </div>
+  <div class="col col-md-3">
+    {{address.address}}
+  </div>
+  <div class="col col-md-1">
+    <fa-icon icon="edit" (click)="address.editMode=true"></fa-icon>
+    <fa-icon icon="trash" [styles]="{'color':'#cc1111'}" (click)="delete()"></fa-icon>
+  </div>
+</div>
+<app-edit-address [address]="address" *ngIf="address.editMode"></app-edit-address>
