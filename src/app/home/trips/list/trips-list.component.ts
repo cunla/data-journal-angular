@@ -20,7 +20,7 @@ export class TripsListComponent implements OnInit {
   searchByName() {
     const value = this.searchValue.toLowerCase();
     this.trips.init('trips', 'start', {
-      reverse: false, prepend: false, searchValue: value,
+      reverse: true, prepend: false, searchValue: value,
     });
   }
 
