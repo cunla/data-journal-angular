@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TripInterface, TripsService} from '../trips.service';
+import {Dates} from "../../common/dates";
 
 @Component({
   selector: 'app-trip',
@@ -8,16 +9,11 @@ import {TripInterface, TripsService} from '../trips.service';
 })
 export class TripComponent implements OnInit {
   @Input() trip: TripInterface;
-  daysDiff = TripComponent.daysDiffFunc;
+  daysDiff = Dates.daysDiffFunc;
 
   constructor(private trips: TripsService) {
   }
 
-  static daysDiffFunc(date1: Date, date2: Date): number {
-    date2 = date2 ? date2 : new Date();
-    const diff = Math.abs(date1.getTime() - date2.getTime());
-    return Math.ceil(diff / (1000 * 3600 * 24));
-  }
 
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AddressInterface, AddressService} from '../address.service';
 import {TripComponent} from '../../trips/trip/trip.component';
+import {Dates} from "../../common/dates";
 
 @Component({
   selector: 'app-address',
@@ -9,7 +10,7 @@ import {TripComponent} from '../../trips/trip/trip.component';
 })
 export class AddressComponent implements OnInit {
   @Input() address: AddressInterface;
-  daysDiff = TripComponent.daysDiffFunc;
+  daysDiff = Dates.daysDiffFunc;
 
   constructor(private addressService: AddressService) {
   }

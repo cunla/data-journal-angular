@@ -20,6 +20,7 @@ import {AddressService} from './address.service';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
+import {DatesModule} from '../common/dates.module';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -47,6 +48,7 @@ const routes: Routes = [
     MatMomentDateModule,
     MatAutocompleteModule,
     HomeGuardModule,
+    DatesModule,
   ],
   providers: [
     MatDatepickerModule,

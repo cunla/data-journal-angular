@@ -5,6 +5,7 @@ import {countries} from 'typed-countries';
 import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
 import {AddressInterface, AddressService, EMPTY_ADDRESS} from '../address.service';
+import {Dates} from "../../common/dates";
 
 @Component({
   selector: 'app-edit-address',
@@ -59,7 +60,9 @@ export class EditAddressComponent implements OnInit {
       address: [this.address.address, Validators.required],
       start: [this.address.start, Validators.required],
       end: [this.address.end,],
-    });
+    },{ validator: Validators.compose([
+        Dates.dateLessThanValidator('start', 'end'),
+      ])});
     this.filteredOptions = this.addressForm.get('country').valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
