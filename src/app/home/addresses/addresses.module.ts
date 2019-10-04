@@ -21,6 +21,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {DatesModule} from '../common/dates.module';
+import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -49,6 +50,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     HomeGuardModule,
     DatesModule,
+    MatIconModule,
   ],
   providers: [
     MatDatepickerModule,

@@ -24,9 +24,17 @@
   <div class="col col-md-2">
     {{trip.purpose}}
   </div>
-  <div class="col col-md-1">
-    <fa-icon icon="edit" (click)="trip.editMode=true"></fa-icon>
-    <fa-icon icon="trash" [styles]="{'color':'#cc1111'}" (click)="delete()"></fa-icon>
+  <div class="col col-md-2">
+    <button color="primary" mat-icon-button
+            aria-label="Edit"
+            (click)="trip.editMode=true">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button color="warn" mat-icon-button
+            aria-label="Delete"
+            (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </div>
 <app-edit-trip [trip]="trip" *ngIf="trip.editMode"></app-edit-trip>

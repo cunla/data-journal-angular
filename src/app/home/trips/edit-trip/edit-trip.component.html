@@ -1,40 +1,51 @@
-<div class="row">
+<ng-container>
   <form (ngSubmit)="onSubmit(tripForm.value)"
-        [formGroup]="tripForm" class="edit-form" novalidate>
+        [formGroup]="tripForm" novalidate>
+    <div class="row">
+      <mat-form-field class="col col-md-2">
+        <input formControlName="start" matInput [matDatepicker]="picker1" placeholder="Starting date">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="col col-md-2">
-      <input formControlName="start" matInput [matDatepicker]="picker1" placeholder="Starting date">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="col col-md-2">
+        <input formControlName="end" matInput [matDatepicker]="picker2" placeholder="Ending date">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="col col-md-2">
-      <input formControlName="end" matInput [matDatepicker]="picker2" placeholder="Ending date">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="input-style col col-md-3">
+        <input type="text" placeholder="Pick a country" aria-label="Country"
+               matInput formControlName="country" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
+            <span [class]="'flag-icon flag-icon-'+option[1]"></span>
+            {{option[0]}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
-    <mat-form-field class="input-style col col-md-3">
-      <input type="text" placeholder="Pick a country" aria-label="Country"
-             matInput formControlName="country" [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
-          <span [class]="'flag-icon flag-icon-'+option[1]"></span>
-          {{option[0]}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      <mat-form-field class="input-style col col-md-1">
+        <input formControlName="city" matInput placeholder="City">
+      </mat-form-field>
 
-    <mat-form-field class="input-style col col-md-1">
-      <input formControlName="city" matInput placeholder="City">
-    </mat-form-field>
+      <mat-form-field class="input-style col col-md-2">
+        <input formControlName="purpose" matInput placeholder="Purpose">
+      </mat-form-field>
 
-    <mat-form-field class="input-style col col-md-2">
-      <input formControlName="purpose" matInput placeholder="Purpose">
-    </mat-form-field>
-
-    <button color="primary" mat-raised-button type="submit">
-      <fa-icon icon="save"></fa-icon>
-    </button>
+      <button [disabled]="tripForm.invalid" color="primary"
+              mat-raised-button type="submit">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="row" *ngIf="tripForm.hasError('dates')">
+          <div class="col">
+            <mat-error>End date must be after start date</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
-</div>
+</ng-container>

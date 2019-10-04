@@ -17,6 +17,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {HomeGuard} from '../guard/home.guard';
 import {HomeGuardModule} from '../guard/home.guard.module';
 import {DatesModule} from "../common/dates.module";
+import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -45,6 +46,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     HomeGuardModule,
     DatesModule,
+    MatIconModule,
   ],
   providers: [
     MatDatepickerModule,

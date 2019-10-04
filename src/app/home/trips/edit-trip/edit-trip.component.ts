@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {countries} from 'typed-countries';
 import * as moment from 'moment';
+import {Dates} from "../../common/dates";
 
 @Component({
   selector: 'app-edit-trip',
@@ -59,6 +60,10 @@ export class EditTripComponent implements OnInit {
       purpose: [this.trip.purpose, Validators.required],
       start: [this.trip.start, Validators.required],
       end: [this.trip.end,],
+    }, {
+      validator: Validators.compose([
+        Dates.dateLessThanValidator('start', 'end'),
+      ])
     });
     this.filteredOptions = this.tripForm.get('country').valueChanges.pipe(
       startWith(''),
