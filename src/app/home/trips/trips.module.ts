@@ -2,7 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TripsListComponent} from './list/trips-list.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule, MatDialogModule, MatInputModule, MatSelectModule, MatSliderModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatSliderModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TripsService} from './trips.service';
 import {EditTripComponent} from './edit-trip/edit-trip.component';
@@ -47,6 +54,7 @@ const routes: Routes = [
     HomeGuardModule,
     DatesModule,
     MatIconModule,
+    MatListModule,
   ],
   providers: [
     MatDatepickerModule,

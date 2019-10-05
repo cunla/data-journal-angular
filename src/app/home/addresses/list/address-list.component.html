@@ -36,8 +36,7 @@
       <div class="col col-md-2">Address</div>
     </div>
   </div>
-  <div *ngFor="let item of addressService.data | async"
-       class="list-group-item list-group-item-action flex-column align-items-start">
-    <app-address [address]="item"></app-address>
-  </div>
+  <app-address [address]="item" *ngFor="let item of addressService.data | async"
+               class="list-group-item list-group-item-action flex-column align-items-start">
+  </app-address>
 </div>

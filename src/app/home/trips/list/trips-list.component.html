@@ -36,8 +36,7 @@
       <div class="col col-md-2">Purpose</div>
     </div>
   </div>
-  <div *ngFor="let item of trips.data | async"
-       class="list-group-item list-group-item-action flex-column align-items-start">
-    <app-trip [trip]="item"></app-trip>
-  </div>
+  <app-trip [trip]="item" *ngFor="let item of trips.data | async"
+            class="list-group-item list-group-item-action flex-column align-items-start">
+  </app-trip>
 </div>

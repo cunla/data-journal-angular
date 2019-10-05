@@ -1,3 +1,29 @@
+<!--
+<mat-list-item *ngIf="!trip.editMode">
+  <h4 mat-line>
+    {{trip.start | date: 'yyyy-MM-dd'}} - {{trip.end | date: 'yyyy-MM-dd'}}
+    ({{daysDiff(trip.start, trip.end)}} days)
+  </h4>
+  <p mat-line>
+    <span *ngIf="trip.countryCode" [class]="'flag-icon flag-icon-'+trip.countryCode"></span>
+    {{trip.country}} <span *ngIf="trip.state">({{trip.state}})</span>
+    {{trip.city}}
+  </p>
+  <p mat-line> {{trip.purpose}}</p>
+  <p>
+    <button color="primary" mat-icon-button
+            aria-label="Edit"
+            (click)="trip.editMode=true">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button color="warn" mat-icon-button
+            aria-label="Delete"
+            (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </p>
+</mat-list-item>
+-->
 <div class="row" *ngIf="!trip.editMode">
   <div class="col col-md-4">
     <div class="row">
