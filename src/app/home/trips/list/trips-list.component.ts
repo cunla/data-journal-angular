@@ -23,5 +23,4 @@ export class TripsListComponent implements OnInit {
       reverse: true, prepend: false, searchValue: value,
     });
   }
-
 }

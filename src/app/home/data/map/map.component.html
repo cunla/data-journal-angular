@@ -4,7 +4,8 @@
   [center]="[ -79.393491,43.660586]"
 >
   <mgl-layer
-    id="route"
+    *ngFor="let item of trips; let i = index"
+    [id]="'route'+i"
     type="line"
     [source]="{
         'type': 'geojson',
@@ -13,10 +14,7 @@
             'properties': {},
             'geometry': {
                 'type': 'LineString',
-                'coordinates': [
-                    [-79.393491,43.660586],
-                    [-71.421353,41.813043]
-                ]
+                'coordinates': item
             }
         }
       }"

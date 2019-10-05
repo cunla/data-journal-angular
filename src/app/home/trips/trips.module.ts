@@ -23,7 +23,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {HomeGuard} from '../guard/home.guard';
 import {HomeGuardModule} from '../guard/home.guard.module';
-import {DatesModule} from "../common/dates.module";
+import {ToolsModule} from "../common/tools.module";
 import {MatIconModule} from '@angular/material/icon';
 
 const routes: Routes = [
@@ -52,7 +52,7 @@ const routes: Routes = [
     MatMomentDateModule,
     MatAutocompleteModule,
     HomeGuardModule,
-    DatesModule,
+    ToolsModule,
     MatIconModule,
     MatListModule,
   ],

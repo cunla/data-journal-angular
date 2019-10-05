@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {DATE_FORMATS} from "./dates";
+import {CountriesService} from "./countries.service";
 
 
 
@@ -17,6 +18,7 @@ import {DATE_FORMATS} from "./dates";
     // here, due to limitations of our example generation script.
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
+    CountriesService,
   ]
 })
-export class DatesModule { }
+export class ToolsModule { }
