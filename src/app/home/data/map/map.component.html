@@ -1,8 +1,33 @@
-
-  <mgl-map
-    [style]="'mapbox://styles/mapbox/basic-v9'"
-    [zoom]="[3]"
-    [center]="[-77.38, 39]"
-  >
-  </mgl-map>
+<mgl-map
+  [style]="'mapbox://styles/mapbox/basic-v9'"
+  [zoom]="[3]"
+  [center]="[ -79.393491,43.660586]"
+>
+  <mgl-layer
+    id="route"
+    type="line"
+    [source]="{
+        'type': 'geojson',
+        'data': {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': [
+                    [-79.393491,43.660586],
+                    [-71.421353,41.813043]
+                ]
+            }
+        }
+      }"
+    [layout]="{
+        'line-join': 'round',
+        'line-cap': 'round'
+      }"
+    [paint]="{
+        'line-color': 'red',
+        'line-width': 3
+      }"
+  ></mgl-layer>
+</mgl-map>
 
