@@ -39,7 +39,7 @@ export class EditAddressComponent implements OnInit {
       this.addressService.create(value).then(
         res => {
           this.addressService.refresh();
-          this.address = EMPTY_ADDRESS;
+          this.addressForm.reset();
         }
       );
     } else {

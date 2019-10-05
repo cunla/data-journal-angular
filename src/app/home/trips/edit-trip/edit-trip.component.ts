@@ -39,7 +39,7 @@ export class EditTripComponent implements OnInit {
       this.trips.create(value).then(
         res => {
           this.trips.refresh();
-          this.trip = EMPTY_TRIP;
+          this.tripForm.reset();
         }
       );
     } else {
