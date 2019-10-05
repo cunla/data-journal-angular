@@ -17,7 +17,7 @@ export class AppComponent {
 
   logout() {
     this.auth.doLogout().then(() => {
-      this.router.navigate(['/auth']).then();
+      this.router.navigate(['/auth/login']).then();
     });
   }
 }
