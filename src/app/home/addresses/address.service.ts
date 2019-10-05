@@ -178,7 +178,8 @@ export class AddressService {
     this.data = this._data.asObservable().scan((acc, values) => {
       const val = values.filter(item => {
         return item.country.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.purpose.toLowerCase().indexOf(this.query.searchValue) !== -1;
+          || item.city.toLowerCase().indexOf(this.query.searchValue) !== -1
+          || item.address.toLowerCase().indexOf(this.query.searchValue) !== -1;
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);
     });
