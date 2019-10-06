@@ -3,9 +3,9 @@ import {EMPTY_TRIP, TripInterface, TripsService} from '../trips.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {countries} from 'typed-countries';
 import * as moment from 'moment';
 import {Dates} from "../../common/dates";
+import {COUNTRIES} from "../../common/countries.service";
 
 @Component({
   selector: 'app-edit-trip',
@@ -22,7 +22,7 @@ export class EditTripComponent implements OnInit {
               private fb: FormBuilder,
   ) {
     this.nameToIsoMap = new Map<string, string>(
-      countries.map(option => [option.name, option.iso.toLowerCase()] as [string, string])
+      COUNTRIES.map(option => [option.name, option.iso] as [string, string])
     );
   }
 
@@ -73,7 +73,7 @@ export class EditTripComponent implements OnInit {
 
   private _filter(value: string): string[][] {
     const filterValue = value.toLowerCase();
-    return countries
+    return COUNTRIES
       .filter(option => option.name.toLowerCase().indexOf(filterValue) === 0
         || option.iso.toLowerCase().indexOf(filterValue) === 0)
       .map(option => [option.name, option.iso.toLowerCase()]);

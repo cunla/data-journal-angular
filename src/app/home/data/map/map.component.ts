@@ -36,7 +36,6 @@ export class MapComponent implements OnInit {
       let data = {latlng: null};
       for (let ind in sortedTrips) {
         this.countriesService.get(sortedTrips[ind].country).subscribe(res => {
-          origin = data || {latlng: [0, 0]};
           data = <any>res.data();
           if (data !== undefined) {
             this.trips.push([origin.latlng, data.latlng.reverse()]);

@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {countries} from 'typed-countries';
 import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
 import {AddressInterface, AddressService, EMPTY_ADDRESS} from '../address.service';
 import {Dates} from "../../common/dates";
+import {COUNTRIES} from "../../common/countries.service";
 
 @Component({
   selector: 'app-edit-address',
@@ -22,7 +22,7 @@ export class EditAddressComponent implements OnInit {
               private fb: FormBuilder,
   ) {
     this.nameToIsoMap = new Map<string, string>(
-      countries.map(option => [option.name, option.iso.toLowerCase()] as [string, string])
+      COUNTRIES.map(option => [option.name, option.iso.toLowerCase()] as [string, string])
     );
   }
 
@@ -71,7 +71,7 @@ export class EditAddressComponent implements OnInit {
 
   private _filter(value: string): string[][] {
     const filterValue = value.toLowerCase();
-    return countries
+    return COUNTRIES
       .filter(option => option.name.toLowerCase().indexOf(filterValue) === 0
         || option.iso.toLowerCase().indexOf(filterValue) === 0)
       .map(option => [option.name, option.iso.toLowerCase()]);
