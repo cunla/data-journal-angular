@@ -14,8 +14,7 @@
   </div>
 
   <div class="col col-md-2">
-    <span *ngIf="address.countryCode"
-          [class]="'flag-icon flag-icon-'+address.countryCode"></span>
+    <mat-icon *ngIf="address.countryCode" [svgIcon]="'flag-'+address.countryCode"></mat-icon>
     {{address.country}} <span *ngIf="address.state">({{address.state}})</span>
   </div>
   <div class="col col-md-1">

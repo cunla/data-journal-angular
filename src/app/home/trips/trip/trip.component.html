@@ -40,8 +40,7 @@
   </div>
 
   <div class="col col-md-3">
-    <span *ngIf="trip.countryCode"
-          [class]="'flag-icon flag-icon-'+trip.countryCode"></span>
+    <mat-icon *ngIf="trip.countryCode" [svgIcon]="'flag-'+trip.countryCode"></mat-icon>
     {{trip.country}} <span *ngIf="trip.state">({{trip.state}})</span>
   </div>
   <div class="col col-md-1">

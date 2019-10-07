@@ -19,7 +19,7 @@
                matInput formControlName="country" [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
-            <span [class]="'flag-icon flag-icon-'+option[1]"></span>
+            <mat-icon [svgIcon]="'flag-'+option[1]"></mat-icon>
             {{option[0]}}
           </mat-option>
         </mat-autocomplete>

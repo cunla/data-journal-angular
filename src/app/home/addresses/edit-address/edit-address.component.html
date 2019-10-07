@@ -4,7 +4,6 @@
     <div class="row">
       <mat-form-field class="col col-md-2">
         <input formControlName="start" matInput
-               type="date" useValueAsDate
                [matDatepicker]="picker1" placeholder="Starting date">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
@@ -12,7 +11,6 @@
 
       <mat-form-field class="col col-md-2">
         <input formControlName="end" matInput
-               type="date" useValueAsDate
                [matDatepicker]="picker2" placeholder="Ending date">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
@@ -23,7 +21,7 @@
                matInput formControlName="country" [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
-            <span [class]="'flag-icon flag-icon-'+option[1]"></span>
+            <mat-icon [svgIcon]="'flag-'+option[1]"></mat-icon>
             {{option[0]}}
           </mat-option>
         </mat-autocomplete>

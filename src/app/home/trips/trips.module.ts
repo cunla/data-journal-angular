@@ -52,9 +52,9 @@ const routes: Routes = [
     MatMomentDateModule,
     MatAutocompleteModule,
     HomeGuardModule,
-    ToolsModule,
     MatIconModule,
     MatListModule,
+    ToolsModule,
   ],
   providers: [
     MatDatepickerModule,
