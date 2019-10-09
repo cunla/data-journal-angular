@@ -9,9 +9,10 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 const routes: Routes = [
-  // {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
 ];
@@ -27,6 +28,8 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [AuthService, AuthGuard],
 })
