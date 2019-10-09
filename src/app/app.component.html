@@ -1,10 +1,68 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" [opened]="auth.isLoggedIn">
+    <mat-nav-list>
+      <a mat-list-item routerLink="home/trips">
+        <mat-icon>list</mat-icon>
+        Trips
+      </a>
+      <a mat-list-item routerLink="home/address-history">
+        <mat-icon>home</mat-icon>
+        Address history
+      </a>
+      <a mat-list-item routerLink="home/info">
+        <mat-icon>map</mat-icon>
+        Map
+      </a>
+      <a mat-list-item routerLink="privacy-policy">
+        Privacy Policy
+      </a>
+      <a mat-list-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Log out
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
+<!--
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+  <button mat-list-item routerLink="home/trips">
+    <mat-icon>list</mat-icon>
+    Trips
+  </button>
+  <button mat-list-item routerLink="home/address-history">
+    <mat-icon>home</mat-icon>
+    Address history
+  </button>
+  <button mat-list-item routerLink="home/info">
+    <mat-icon>map</mat-icon>
+    Map
+  </button>
+  <button mat-list-item routerLink="privacy-policy">
+    Privacy Policy
+  </button>
+  <button mat-list-item (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    Log out
+  </button>
+
+</mat-menu>
+<div class="content-container">
+  <router-outlet></router-outlet>
+</div>
+-->
+<!--
 <div class="page-container">
   <div class="side-bar">
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link active" routerLink="home/trips">
           <fa-icon icon="list"></fa-icon>
-          <!--          Trips list-->
         </a>
       </li>
     </ul>
@@ -16,16 +74,6 @@
         </a>
       </li>
     </ul>
-    <!--
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active" routerLink="home/trips">
-          <fa-icon icon="file-invoice-dollar"></fa-icon>
-          Countries per year
-        </a>
-      </li>
-    </ul>
-    -->
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link active" routerLink="home/address-history">
@@ -50,3 +98,4 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+-->

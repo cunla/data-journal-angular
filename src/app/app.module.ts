@@ -11,6 +11,11 @@ import {AuthModule} from './auth/auth.module';
 import {HomeModule} from './home/home.module';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {PrivacyPolicyModule} from "./privacy-policy/privacy-policy.module";
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,10 @@ import {PrivacyPolicyModule} from "./privacy-policy/privacy-policy.module";
     AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     FontAwesomeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
