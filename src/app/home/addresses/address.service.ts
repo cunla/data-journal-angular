@@ -5,8 +5,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
-import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {Dates} from '../common/dates';
 
 export const ADDRESS_HISTORY_PATH = 'address-history';
 
@@ -48,6 +48,14 @@ export const EMPTY_ADDRESS: AddressInterface = {
   providedIn: 'root'
 })
 export class AddressService {
+
+  constructor(public db: AngularFirestore,
+              public afAuth: AngularFireAuth) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.userId = user.uid;
+    this.init(ADDRESS_HISTORY_PATH, 'start', {reverse: false, prepend: false});
+  }
+
   // Source data
   private _done = new BehaviorSubject(false);
   private _loading = new BehaviorSubject(false);
@@ -60,13 +68,6 @@ export class AddressService {
   done: Observable<boolean> = this._done.asObservable();
   loading: Observable<boolean> = this._loading.asObservable();
   private readonly userId: string;
-
-  constructor(public db: AngularFirestore,
-              public afAuth: AngularFireAuth) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    this.userId = user.uid;
-    this.init(ADDRESS_HISTORY_PATH, 'start', {reverse: false, prepend: false});
-  }
 
   // Initial query sets options and defines the Observable
   // passing opts will override the defaults
@@ -177,9 +178,9 @@ export class AddressService {
     // Create the observable array for consumption in components
     this.data = this._data.asObservable().scan((acc, values) => {
       const val = values.filter(item => {
-        return item.country.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.city.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.address.toLowerCase().indexOf(this.query.searchValue) !== -1;
+        return Dates.containsCaseInsensitive(item.country, this.query.searchValue)
+          || Dates.containsCaseInsensitive(item.city, this.query.searchValue)
+          || Dates.containsCaseInsensitive(item.address, this.query.searchValue);
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);
     });

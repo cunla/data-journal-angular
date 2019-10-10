@@ -20,11 +20,12 @@ export class AddressListComponent implements OnInit {
   }
 
   searchByName() {
-    const value = this.searchValue.toLowerCase();
+    const value = this.searchValue ? this.searchValue.toLowerCase() : '';
     this.addressService.init(ADDRESS_HISTORY_PATH, 'start', {
       reverse: true, prepend: false, searchValue: value,
     });
   }
+
   exportCsv() {
     this.addressService.data.subscribe(res => {
       const tripsCsv = CsvTools.convertToCsv(res,

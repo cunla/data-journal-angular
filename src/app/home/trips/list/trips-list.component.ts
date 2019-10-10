@@ -20,7 +20,7 @@ export class TripsListComponent implements OnInit {
   }
 
   searchByName() {
-    const value = this.searchValue.toLowerCase();
+    const value = this.searchValue ? this.searchValue.toLowerCase() : '';
     this.trips.init('trips', 'start', {
       reverse: true, prepend: false, searchValue: value,
     });
@@ -34,5 +34,13 @@ export class TripsListComponent implements OnInit {
       const blob = new Blob([tripsCsv], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, 'data.csv');
     });
+  }
+
+  calculateDaysPerYear(): Map<string, number> {
+    const res = new Map<string, number>();
+    this.trips.data.subscribe((trips) => {
+
+    });
+    return res;
   }
 }

@@ -3,9 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
-import {AddressInterface, AddressService, EMPTY_ADDRESS} from '../address.service';
-import {Dates} from "../../common/dates";
-import {COUNTRIES} from "../../common/countries.service";
+import {AddressInterface, AddressService} from '../address.service';
+import {Dates} from '../../common/dates';
+import {COUNTRIES} from '../../common/countries.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -60,9 +60,11 @@ export class EditAddressComponent implements OnInit {
       address: [this.address.address, Validators.required],
       start: [this.address.start, Validators.required],
       end: [this.address.end,],
-    },{ validator: Validators.compose([
+    }, {
+      validator: Validators.compose([
         Dates.dateLessThanValidator('start', 'end'),
-      ])});
+      ])
+    });
     this.filteredOptions = this.addressForm.get('country').valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
@@ -70,10 +72,10 @@ export class EditAddressComponent implements OnInit {
   }
 
   private _filter(value: string): string[][] {
-    const filterValue = value.toLowerCase();
+    const filterValue = value ? value.toLowerCase() : '';
     return COUNTRIES
-      .filter(option => option.name.toLowerCase().indexOf(filterValue) === 0
-        || option.iso.toLowerCase().indexOf(filterValue) === 0)
+      .filter(option => !Dates.containsCaseInsensitive(option.name, filterValue)
+        || !Dates.containsCaseInsensitive(option.iso, filterValue))
       .map(option => [option.name, option.iso.toLowerCase()]);
   }
 }

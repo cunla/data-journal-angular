@@ -5,9 +5,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
-import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
-import Timestamp = firebase.firestore.Timestamp;
+import {Dates} from '../common/dates';
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -127,8 +126,8 @@ export class TripsService {
           const data = snap.payload.doc.data();
           data.id = snap.payload.doc.id;
           const doc = snap.payload.doc;
-          data.start = data.start ? data.start.toDate():null;
-          data.end = data.end ? data.end.toDate():null;
+          data.start = data.start ? data.start.toDate() : null;
+          data.end = data.end ? data.end.toDate() : null;
           return {...data, doc};
         });
 
@@ -177,9 +176,9 @@ export class TripsService {
     // Create the observable array for consumption in components
     this.data = this._data.asObservable().scan((acc, values) => {
       const val = values.filter(item => {
-        return item.country.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.purpose.toLowerCase().indexOf(this.query.searchValue) !== -1
-          || item.city.toLowerCase().indexOf(this.query.searchValue) !== -1;
+        return Dates.containsCaseInsensitive(item.country, this.query.searchValue)
+          || Dates.containsCaseInsensitive(item.purpose, this.query.searchValue)
+          || Dates.containsCaseInsensitive(item.city, this.query.searchValue);
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);
     });

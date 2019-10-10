@@ -1,23 +1,29 @@
-import {FormGroup, ValidatorFn} from "@angular/forms";
+import {FormGroup, ValidatorFn} from '@angular/forms';
 
 export class Dates {
   static dateLessThanValidator(from: string, to: string): ValidatorFn {
     return (group: FormGroup): { [key: string]: any } => {
-      let f = group.controls[from];
-      let t = group.controls[to];
+      const f = group.controls[from];
+      const t = group.controls[to];
       if (f.value !== null && t.value !== null && f.value > t.value) {
         return {
-          dates: "Date from should be less than Date to"
+          dates: 'Date from should be less than Date to'
         };
       }
       return {};
-    }
+    };
   }
 
   static daysDiffFunc(date1: Date, date2: Date): number {
     date2 = date2 ? date2 : new Date();
     const diff = Math.abs(date1.getTime() - date2.getTime());
     return Math.ceil(diff / (1000 * 3600 * 24));
+  }
+
+  static containsCaseInsensitive(str: string, substr: string): boolean {
+    substr = substr ? substr.toLowerCase() : '';
+    return (str !== null)
+      && (str !== undefined) && (str.toLowerCase().indexOf(substr) !== -1);
   }
 }
 
