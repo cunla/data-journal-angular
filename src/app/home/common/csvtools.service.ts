@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
 export class CsvTools {
-  static convertToCSV(objArray, headerList): string {
+  static convertToCsv(objArray, headerList): string {
     const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'Line#, ';
@@ -12,7 +12,7 @@ export class CsvTools {
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
-      let line = '' + (i + 1);
+      let line = '"' + (i + 1) + '"';
       // tslint:disable-next-line:forin
       for (const index in headerList) {
         const head = headerList[index];
