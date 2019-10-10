@@ -1,8 +1,10 @@
-export class Csvtools {
+import * as moment from 'moment';
+
+export class CsvTools {
   static convertToCSV(objArray, headerList): string {
     const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
-    let row = 'Line#,';
+    let row = 'Line#, ';
     // tslint:disable-next-line:forin
     for (const index in headerList) {
       row += headerList[index] + ', ';
@@ -14,10 +16,20 @@ export class Csvtools {
       // tslint:disable-next-line:forin
       for (const index in headerList) {
         const head = headerList[index];
-        line += '", "' + array[i][head];
+        line += ', ' + CsvTools.formatAsString(array[i][head]);
       }
-      str += line + '"\r\n"';
+      str += line + '\r\n';
     }
     return str;
+  }
+
+  private static formatAsString(obj) {
+    if (obj instanceof Date) {
+      return moment(obj).format('"YYYY-MM-DD"');
+    }
+    if (obj === null) {
+      return '""';
+    }
+    return '"' + obj + '"';
   }
 }
