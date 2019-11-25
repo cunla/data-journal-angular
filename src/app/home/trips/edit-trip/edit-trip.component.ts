@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import * as moment from 'moment';
 import {Dates} from '../../common/dates';
-import {COUNTRIES} from '../../common/countries.service';
+import {COUNTRIES, CountriesService} from '../../common/countries.service';
 
 @Component({
   selector: 'app-edit-trip',
@@ -17,6 +17,7 @@ export class EditTripComponent implements OnInit {
   tripForm: FormGroup;
   filteredOptions: Observable<string[][]>;
   nameToIsoMap: Map<string, string>;
+  _filter = CountriesService.filterCountries;
 
   constructor(public trips: TripsService,
               private fb: FormBuilder,
@@ -71,11 +72,4 @@ export class EditTripComponent implements OnInit {
     );
   }
 
-  private _filter(value: string): string[][] {
-    const filterValue = value ? value.toLowerCase() : '';
-    return COUNTRIES
-      .filter(option => !Dates.containsCaseInsensitive(option.name, filterValue)
-        || !Dates.containsCaseInsensitive(option.iso, filterValue))
-      .map(option => [option.name, option.iso.toLowerCase()]);
-  }
 }

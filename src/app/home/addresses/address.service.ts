@@ -6,7 +6,7 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Dates} from '../common/dates';
+import {containsCaseInsensitive} from "../common/string.tools";
 
 export const ADDRESS_HISTORY_PATH = 'address-history';
 
@@ -178,9 +178,9 @@ export class AddressService {
     // Create the observable array for consumption in components
     this.data = this._data.asObservable().scan((acc, values) => {
       const val = values.filter(item => {
-        return Dates.containsCaseInsensitive(item.country, this.query.searchValue)
-          || Dates.containsCaseInsensitive(item.city, this.query.searchValue)
-          || Dates.containsCaseInsensitive(item.address, this.query.searchValue);
+        return containsCaseInsensitive(item.country, this.query.searchValue)
+          || containsCaseInsensitive(item.city, this.query.searchValue)
+          || containsCaseInsensitive(item.address, this.query.searchValue);
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);
     });

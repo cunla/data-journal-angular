@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
 import {AddressInterface, AddressService} from '../address.service';
 import {Dates} from '../../common/dates';
-import {COUNTRIES} from '../../common/countries.service';
+import {COUNTRIES, CountriesService} from '../../common/countries.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -17,6 +17,7 @@ export class EditAddressComponent implements OnInit {
   addressForm: FormGroup;
   filteredOptions: Observable<string[][]>;
   nameToIsoMap: Map<string, string>;
+  _filter = CountriesService.filterCountries;
 
   constructor(public addressService: AddressService,
               private fb: FormBuilder,
@@ -69,13 +70,5 @@ export class EditAddressComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value))
     );
-  }
-
-  private _filter(value: string): string[][] {
-    const filterValue = value ? value.toLowerCase() : '';
-    return COUNTRIES
-      .filter(option => !Dates.containsCaseInsensitive(option.name, filterValue)
-        || !Dates.containsCaseInsensitive(option.iso, filterValue))
-      .map(option => [option.name, option.iso.toLowerCase()]);
   }
 }

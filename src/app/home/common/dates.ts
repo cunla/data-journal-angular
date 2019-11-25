@@ -20,11 +20,6 @@ export class Dates {
     return Math.ceil(diff / (1000 * 3600 * 24));
   }
 
-  static containsCaseInsensitive(str: string, substr: string): boolean {
-    substr = substr ? substr.toLowerCase() : '';
-    return (str !== null)
-      && (str !== undefined) && (str.toLowerCase().indexOf(substr) !== -1);
-  }
 }
 
 // See the Moment.js docs for the meaning of these formats:
