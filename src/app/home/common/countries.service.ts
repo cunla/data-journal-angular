@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {containsCaseInsensitive} from "./string.tools";
+import {containsCaseInsensitive} from './string.tools';
 
 
 const COUNTRIES_DATA_PATH = 'countries';
@@ -1255,8 +1255,18 @@ export class CountriesService {
   constructor(public db: AngularFirestore) {
   }
 
+  public static filterCountries(value: string): string[][] {
+    const filterValue = value ? value.toLowerCase() : '';
+    const res = COUNTRIES
+      .filter(option => containsCaseInsensitive(option.name, filterValue)
+        || containsCaseInsensitive(option.iso, filterValue))
+      .map(option => [option.name, option.iso])
+      .sort((a, b) => b[1].indexOf(value) - a[1].indexOf(value));
+    return res;
+  }
+
   get(key) {
-    return this.db.collection(COUNTRIES_DATA_PATH).doc(key).get();
+    return COUNTRIES.filter(country => country.name == key).map(country => country.latlng);
   }
 
   update(key, value) {
@@ -1267,13 +1277,4 @@ export class CountriesService {
     return this.db.collection(COUNTRIES_DATA_PATH).doc(key).delete();
   }
 
-  public static filterCountries(value: string): string[][] {
-    const filterValue = value ? value.toLowerCase() : '';
-    let res = COUNTRIES
-      .filter(option => containsCaseInsensitive(option.name, filterValue)
-        || containsCaseInsensitive(option.iso, filterValue))
-      .map(option => [option.name, option.iso])
-      .sort((a, b) => b[1].indexOf(value) - a[1].indexOf(value));
-    return res;
-  }
 }

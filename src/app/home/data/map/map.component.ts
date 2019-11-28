@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CountriesService} from "../../common/countries.service";
-import {TripInterface, TripsService} from "../../trips/trips.service";
+import {CountriesService} from '../../common/countries.service';
+import {TripInterface, TripsService} from '../../trips/trips.service';
 
 @Component({
   selector: 'app-map',
@@ -10,46 +10,24 @@ import {TripInterface, TripsService} from "../../trips/trips.service";
 export class MapComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
-  style = {
-    sources: {
-      world: {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'
-      }
-    },
-    version: 8,
-    layers: [{
-      'id': 'countries',
-      'type': 'fill',
-      'source': 'world',
-      'layout': {},
-      'paint': {
-        'fill-color': '#6F788A'
-      }
-    }]
-  };
   trips = [];
+  displayMap = false;
 
   constructor(private tripsService: TripsService,
               private countriesService: CountriesService) {
     tripsService.data.subscribe(trips => {
       const sortedTrips = trips.sort(MapComponent.sortByDates);
-      let origin = {latlng: [0, 0]};
-      let data = {latlng: null};
-      for (let ind in sortedTrips) {
-        this.countriesService.get(sortedTrips[ind].country).subscribe(res => {
-          data = <any>res.data();
+      for (const ind in sortedTrips) {
+          const country = sortedTrips[ind].country;
+          const data = this.countriesService.get(country);
+          console.log(`country ${country}, latlng: ${data}`);
           if (data !== undefined) {
-            this.trips.push([origin.latlng, data.latlng.reverse()]);
-            console.log(sortedTrips[ind].country, this.trips);
+            this.trips.push(data[0]);
           }
-        });
+
       }
-
+      this.displayMap = true;
     });
-  }
-
-  ngOnInit() {
   }
 
   private static sortByDates(a: TripInterface, b: TripInterface) {
@@ -61,4 +39,8 @@ export class MapComponent implements OnInit {
       return 0;
     }
   }
+
+  ngOnInit() {
+  }
+
 }

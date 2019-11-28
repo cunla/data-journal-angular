@@ -8,6 +8,7 @@ import {ToolsModule} from "../common/tools.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {AgmCoreModule} from "@agm/core";
 import {environment} from "../../../environments/environment";
+import {GoogleChartsModule} from 'angular-google-charts';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: environment.firebase.apiKey,
     }),
+    // GoogleChartsModule.forRoot(),
     CommonModule,
     HomeGuardModule,
     RouterModule.forChild(routes),

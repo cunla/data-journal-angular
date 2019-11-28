@@ -1,3 +1,7 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map>
+<div *ngIf="displayMap">
+  <agm-map [zoom]="2">
+    <agm-marker *ngFor="let trip of trips"
+                [latitude]="trip[0]"
+                [longitude]="trip[1]"></agm-marker>
+  </agm-map>
+</div>
