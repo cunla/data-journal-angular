@@ -9,23 +9,25 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AgmCoreModule} from "@agm/core";
 import {environment} from "../../../environments/environment";
 import {GoogleChartsModule} from 'angular-google-charts';
+import { ChartComponent } from './chart/chart.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'map', pathMatch: 'full'},
-  {path: 'map', component: MapComponent, canActivate: [HomeGuard]},
+  {path: 'map', component: ChartComponent, canActivate: [HomeGuard]},
 ];
 
 
 @NgModule({
   declarations: [
     MapComponent,
+    ChartComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
       apiKey: environment.firebase.apiKey,
     }),
-    // GoogleChartsModule.forRoot(),
+    GoogleChartsModule.forRoot(environment.firebase.apiKey),
     CommonModule,
     HomeGuardModule,
     RouterModule.forChild(routes),
