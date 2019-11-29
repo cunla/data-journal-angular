@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TripsService} from '../../trips/trips.service';
 
 @Component({
   selector: 'app-chart',
@@ -7,18 +8,26 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ChartComponent implements OnInit {
   data = [
-    ['Location', 'Population'],
-    ['Canada', 8136000],
-    ['Germany', 8538000],
-    ['France', 2244000],
-    ['Japan', 3470000],
-    ['Russia', 19500000],
+    ['Location', '# Trips'],
   ];
   options = {
     colorAxis: {colors: ['lightgreen', 'blue']}
   };
 
-  constructor() {
+  constructor(private tripsService: TripsService,) {
+    tripsService.data.subscribe(trips => {
+      const counter = new Map();
+      for (const trip of trips) {
+        const country = trip.country;
+        if (!counter.has(country)) {
+          counter.set(country, 0);
+        }
+        counter.set(country, counter.get(country) + 1);
+      }
+      counter.forEach((value, country, map) => {
+        this.data.push([country, value]);
+      });
+    });
   }
 
   ngOnInit() {
