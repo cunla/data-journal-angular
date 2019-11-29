@@ -53,7 +53,7 @@ export class AddressService {
               public afAuth: AngularFireAuth) {
     const user = JSON.parse(localStorage.getItem('user'));
     this.userId = user.uid;
-    this.init(ADDRESS_HISTORY_PATH, 'start', {reverse: false, prepend: false});
+    this.init(ADDRESS_HISTORY_PATH, 'start', {reverse: true, prepend: false});
   }
 
   // Source data
@@ -77,7 +77,7 @@ export class AddressService {
       field: field,
       limit: 50,
       reverse: false,
-      prepend: false,
+      prepend: true,
       searchValue: '',
       filter: true,
       ...opts
