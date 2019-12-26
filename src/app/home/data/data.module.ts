@@ -10,6 +10,8 @@ import {AgmCoreModule} from "@agm/core";
 import {environment} from "../../../environments/environment";
 import {GoogleChartsModule} from 'angular-google-charts';
 import { ChartComponent } from './chart/chart.component';
+import { MapboxComponent } from './mapbox/mapbox.component';
+import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 
 
 const routes: Routes = [
@@ -22,10 +24,16 @@ const routes: Routes = [
   declarations: [
     MapComponent,
     ChartComponent,
+    MapboxComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
       apiKey: environment.firebase.apiKey,
+    }),
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapboxToken, // Optionnal, can also be set per map (accessToken input of mgl-map)
+      // geocoderAccessToken: 'TOKEN'
+      // Optionnal, specify if different from the map access token, can also be set per mgl-geocoder (accessToken input of mgl-geocoder)
     }),
     GoogleChartsModule.forRoot(environment.firebase.apiKey),
     CommonModule,

@@ -1266,7 +1266,7 @@ export class CountriesService {
   }
 
   get(key) {
-    return COUNTRIES.filter(country => country.name == key).map(country => country.latlng);
+    return COUNTRIES.filter(country => country.name === key).map(country => country.latlng);
   }
 
   update(key, value) {
