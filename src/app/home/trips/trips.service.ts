@@ -6,8 +6,7 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Dates} from '../common/dates';
-import {containsCaseInsensitive} from "../common/string.tools";
+import {containsCaseInsensitive} from '../common/string.tools';
 
 export interface QueryConfig {
   path: string; //  path to collection
