@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EMPTY_TRIP, TripInterface, TripsService} from '../trips.service';
 import {CsvTools} from '../../common/csvtools.service';
 import {saveAs} from 'file-saver';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-trips',
@@ -36,10 +37,18 @@ export class TripsListComponent implements OnInit {
     });
   }
 
-  calculateDaysPerYear(): Map<string, number> {
+  calculateDaysPerYear(year: number): Map<string, number> {
     const res = new Map<string, number>();
     this.trips.data.subscribe((trips) => {
-
+      trips.forEach(trip => {
+        if (!res.has(trip.country)) {
+          res.set(trip.country, 0);
+        }
+        const end = moment.min(moment(trip.end), moment([year, 11, 31]));
+        const start = moment.max(moment(trip.start), moment([year, 0, 1]));
+        const days = end.diff(start);
+        res.set(trip.country, res.get(trip.country) + days);
+      });
     });
     return res;
   }

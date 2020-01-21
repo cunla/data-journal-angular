@@ -15,7 +15,7 @@ export class Dates {
   }
 
   static daysDiffFunc(date1: Date, date2: Date): number {
-    date2 = date2 ? date2 : new Date();
+    date2 = date2 || new Date();
     const diff = Math.abs(date1.getTime() - date2.getTime());
     return Math.ceil(diff / (1000 * 3600 * 24));
   }
