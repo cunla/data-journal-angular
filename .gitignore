@@ -10,6 +10,7 @@ environment.prod.ts
 
 # IDEs and editors
 /.idea
+*.iml
 .project
 .classpath
 .c9/
