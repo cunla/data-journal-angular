@@ -6,6 +6,7 @@ import {DATE_FORMATS} from "./dates";
 import {COUNTRIES, CountriesService} from "./countries.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {HttpClientModule} from '@angular/common/http';
+import {CitiesService} from "./cities.service";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {HttpClientModule} from '@angular/common/http';
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
     CountriesService,
+    CitiesService,
   ]
 })
 export class ToolsModule {

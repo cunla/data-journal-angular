@@ -44,11 +44,13 @@ function isEmpty(obj) {
 }
 
 async function upload(data, path) {
+  delete data.id;
+  data['search'] = `${data['city']}/${data['admin_name']}/${data['country']}/${data['iso2']}`.toLowerCase();
   return await admin.firestore()
     .collection('cities')
     .doc(path.join('/'))
     .set(data)
-    .then(() => console.log(`Document ${path.join('/')} uploaded.`))
+    .then(() => console.log(`Document ${path.join('/')}/${data['search']} uploaded.`))
     .catch(() => console.error(`Could not write document ${path.join('/')}.`));
 }
 
