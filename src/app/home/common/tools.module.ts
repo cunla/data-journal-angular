@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatIconModule, MatIconRegistry} from "@angular/material";
-import {MomentDateAdapter} from "@angular/material-moment-adapter";
-import {DATE_FORMATS} from "./dates";
-import {COUNTRIES, CountriesService} from "./countries.service";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatIconModule, MatIconRegistry} from '@angular/material';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DATE_FORMATS} from './dates';
+import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {CitiesService} from "./cities.service";
+import {CitiesService} from './cities.service';
 
 
 @NgModule({
@@ -22,18 +21,18 @@ import {CitiesService} from "./cities.service";
     // here, due to limitations of our example generation script.
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
-    CountriesService,
     CitiesService,
   ]
 })
 export class ToolsModule {
   constructor(private matIconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer) {
-    for (let ind in COUNTRIES) {
+    const countriesIso2s = CitiesService.getCountriesIso2();
+    for (let ind in countriesIso2s) {
 
       this.matIconRegistry.addSvgIcon(
-        'flag-' + COUNTRIES[ind].iso,
-        this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/flags/${COUNTRIES[ind].iso}.svg`)
+        'flag-' + countriesIso2s[ind],
+        this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/flags/${countriesIso2s[ind]}.svg`)
         // this.domSanitizer.bypassSecurityTrustResourceUrl(COUNTRIES[ind].flag)
       );
     }

@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import * as moment from 'moment';
 import {Dates} from '../../common/dates';
-import {COUNTRIES, CountriesService} from '../../common/countries.service';
+import {CitiesService} from '../../common/cities.service';
 
 @Component({
   selector: 'app-edit-trip',
@@ -17,14 +17,10 @@ export class EditTripComponent implements OnInit {
   tripForm: FormGroup;
   filteredOptions: Observable<string[][]>;
   nameToIsoMap: Map<string, string>;
-  _filter = CountriesService.filterCountries;
+  _filter = CitiesService.filterCities;
 
   constructor(public trips: TripsService,
-              private fb: FormBuilder,
-  ) {
-    this.nameToIsoMap = new Map<string, string>(
-      COUNTRIES.map(option => [option.name, option.iso] as [string, string])
-    );
+              private fb: FormBuilder,) {
   }
 
   ngOnInit() {

@@ -18,9 +18,9 @@
         <input type="text" placeholder="Pick a country" aria-label="Country"
                matInput formControlName="country" [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option[0]">
-            <mat-icon [svgIcon]="'flag-'+option[1]"></mat-icon>
-            {{option[0]}}
+          <mat-option *ngFor="let item of filteredOptions | async" [value]="item">
+            <mat-icon [svgIcon]="'flag-'+item['iso2'].toLowerCase()"></mat-icon>
+            {{item['city']+', '+item['country']}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
