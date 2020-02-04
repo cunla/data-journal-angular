@@ -4,19 +4,19 @@ import {MapComponent} from './map/map.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeGuard} from '../guard/home.guard';
 import {HomeGuardModule} from '../guard/home.guard.module';
-import {ToolsModule} from "../common/tools.module";
-import {BrowserModule} from "@angular/platform-browser";
-import {AgmCoreModule} from "@agm/core";
-import {environment} from "../../../environments/environment";
+import {ToolsModule} from '../common/tools.module';
+import {AgmCoreModule} from '@agm/core';
+import {environment} from '../../../environments/environment';
 import {GoogleChartsModule} from 'angular-google-charts';
-import { ChartComponent } from './chart/chart.component';
-import { MapboxComponent } from './mapbox/mapbox.component';
+import {ChartComponent} from './chart/chart.component';
+import {MapboxComponent} from './mapbox/mapbox.component';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'map', pathMatch: 'full'},
-  {path: 'map', component: ChartComponent, canActivate: [HomeGuard]},
+  // {path: 'map', component: ChartComponent, canActivate: [HomeGuard]},
+  {path: 'map', component: MapboxComponent, canActivate: [HomeGuard]},
 ];
 
 

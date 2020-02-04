@@ -1,31 +1,22 @@
 <mgl-map
-  [style]="style"
+  [style]="'mapbox://styles/mapbox/streets-v9'"
   [zoom]="[3]"
-  [center]="[ -79.393491,43.660586]">
+  [center]="[-122.486052, 37.830348]">
+  <mgl-geojson-source id="oneline">
+    <mgl-feature [geometry]="geometry">
+    </mgl-feature>
+  </mgl-geojson-source>
   <mgl-layer
-    *ngFor="let item of trips; let i = index"
-    [id]="'route'+i"
+    id="route"
     type="line"
-    [source]="{
-        'type': 'geojson',
-        'data': {
-            'type': 'Feature',
-            'properties': {},
-            'geometry': {
-                'type': 'LineString',
-                'coordinates': item
-            }
-        }
-      }"
+    source="oneline"
     [layout]="{
         'line-join': 'round',
         'line-cap': 'round'
       }"
     [paint]="{
-        'line-color': 'red',
-        'line-width': 3
+        'line-color': '#888',
+        'line-width': 8
       }">
-
   </mgl-layer>
 </mgl-map>
-

@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TripInterface, TripsService} from '../../trips/trips.service';
-import {CountriesService} from '../../common/countries.service';
-import {Style} from 'mapbox-gl';
+import {CitiesService} from '../../common/cities.service';
 
 @Component({
   selector: 'app-map',
@@ -9,48 +8,26 @@ import {Style} from 'mapbox-gl';
   styleUrls: ['./mapbox.component.scss']
 })
 export class MapboxComponent implements OnInit {
-  style: Style = {
-    sources: {
-      world: {
-        type: 'geojson',
-        data: 'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'
-      }
-    },
-    version: 8,
-    layers: [{
-      'id': 'countries',
-      'type': 'fill',
-      'source': 'world',
-      'layout': {},
-      'paint': {
-        'fill-color': '#6F788A'
-      }
-    }]
-  };
+  @ViewChild('map', {static: false}) map;
   trips = [];
+  geometry = {
+    type: 'LineString',
+    coordinates: this.trips,
+  };
 
-  constructor(private tripsService: TripsService,
-              private countriesService: CountriesService) {
+  constructor(private tripsService: TripsService) {
     tripsService.data.subscribe(trips => {
       const sortedTrips = trips.sort(MapboxComponent.sortByDates);
-      let origin = null;
       // tslint:disable-next-line:forin
       for (const ind in sortedTrips) {
-        const countryData = this.countriesService.get(sortedTrips[ind].country);
-        if (countryData && countryData[0]) {
-          const actual = countryData[0];
+        const countryData = CitiesService.getCountryLngLat(sortedTrips[ind].country);
+        if (countryData && countryData) {
           console.log(`Got data for country ${sortedTrips[ind].country}: ${countryData}`);
-          if (origin) {
-            this.trips.push([origin, actual.reverse()]);
-          }
-          origin = actual;
+          this.trips.push(countryData);
         }
       }
       console.log(this.trips);
     });
-  }
-
-  ngOnInit() {
   }
 
   private static sortByDates(a: TripInterface, b: TripInterface) {
@@ -61,5 +38,8 @@ export class MapboxComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+
+  ngOnInit() {
   }
 }

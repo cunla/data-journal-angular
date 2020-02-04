@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CountriesService} from '../../common/countries.service';
 import {TripInterface, TripsService} from '../../trips/trips.service';
+import {CitiesService} from '../../common/cities.service';
 
 @Component({
   selector: 'app-map',
@@ -13,13 +13,12 @@ export class MapComponent implements OnInit {
   trips = [];
   displayMap = false;
 
-  constructor(private tripsService: TripsService,
-              private countriesService: CountriesService) {
+  constructor(private tripsService: TripsService) {
     tripsService.data.subscribe(trips => {
       const sortedTrips = trips.sort(MapComponent.sortByDates);
       for (const ind in sortedTrips) {
           const country = sortedTrips[ind].country;
-          const data = this.countriesService.get(country);
+          const data = CitiesService.getCountry(country);
           console.log(`country ${country}, latlng: ${data}`);
           if (data !== undefined) {
             this.trips.push(data[0]);
