@@ -1,7 +1,0 @@
-<div *ngIf="displayMap">
-  <agm-map [zoom]="2">
-    <agm-marker *ngFor="let trip of trips"
-                [latitude]="trip[0]"
-                [longitude]="trip[1]"></agm-marker>
-  </agm-map>
-</div>

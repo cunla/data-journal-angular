@@ -1,5 +1,7 @@
-<google-chart title="Places visited"
-              type="GeoChart"
-              [data]="data"
-              [options]="options">
-</google-chart>
+<highcharts-chart
+  [Highcharts]="Highcharts"
+  [constructorType]="chartConstructor"
+  [options]="chartOptions"
+  (chartInstance)="logChartInstance($event)"
+  style="width: 100%; height: 800px; display: block;"
+></highcharts-chart>

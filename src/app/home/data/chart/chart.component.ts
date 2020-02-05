@@ -1,5 +1,24 @@
+import {TripInterface, TripsService} from '../../trips/trips.service';
 import {Component, OnInit} from '@angular/core';
-import {TripsService} from '../../trips/trips.service';
+import * as proj4x from 'proj4';
+import * as Highcharts from 'highcharts';
+import {Chart} from 'highcharts';
+import MapModule from 'highcharts/modules/map';
+import {CitiesService} from '../../common/cities.service';
+
+declare var require: any;
+
+const proj4 = (proj4x as any).default;
+declare global {
+  interface Window {
+    proj4: any;
+  }
+}
+window.proj4 = proj4;
+
+MapModule(Highcharts);
+const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
+
 
 @Component({
   selector: 'app-chart',
@@ -7,30 +26,89 @@ import {TripsService} from '../../trips/trips.service';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  data = [
-    ['Location', '# Trips'],
-  ];
-  options = {
-    colorAxis: {colors: ['lightgreen', 'blue']}
+  private chart: Chart;
+
+  constructor(private tripsService: TripsService) {
+
+  }
+
+  Highcharts: typeof Highcharts = Highcharts; // required
+  chartConstructor = 'mapChart';
+  chartOptions: Highcharts.Options = {
+    credits: {enabled: false},
+    chart: {map: mapWorld},
+    title: {text: 'Countries visited'},
+    mapNavigation: {
+      enabled: true,
+    },
+    tooltip: {
+      formatter: function () {
+        const p = <any>this.point;
+        return `${p.id}${p.lat ? '<br>Lat: ' + p.lat + ' Lon: ' + p.lon : ''}`;
+      }
+    },
+    legend: {
+      enabled: false,
+    },
+    series: [{name: 'Countries', allAreas: true,} as Highcharts.SeriesMapOptions]
   };
 
-  constructor(private tripsService: TripsService,) {
-    tripsService.data.subscribe(trips => {
-      const counter = new Map();
-      for (const trip of trips) {
-        const country = trip.country;
-        if (!counter.has(country)) {
-          counter.set(country, 0);
+  private static sortByDates(a: TripInterface, b: TripInterface) {
+    if (a.start > b.start) {
+      return 1;
+    } else if (a.start < b.start) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  static pointsToPath(from, to, invertArc = false): string {
+    const arcPointX = (from.x + to.x) / (invertArc ? 2.4 : 1.8);
+    const arcPointY = (from.y + to.y) / (invertArc ? 2.4 : 1.8);
+    return `M${from.x},${from.y}Q${arcPointX} ${arcPointY},${to.x} ${to.y}`;
+  }
+
+  logChartInstance(chart: Highcharts.Chart) {
+    this.chart = chart;
+    const torontoLatLng = CitiesService.getCityLngLat('Toronto');
+    const cities = [torontoLatLng,];
+    const tripsArray = [];
+    this.tripsService.data.subscribe(trips => {
+      const sortedTrips = trips.sort(ChartComponent.sortByDates);
+      const torontoPoint = chart.fromLatLonToPoint(torontoLatLng);
+      // tslint:disable-next-line:forin
+      for (const ind in sortedTrips) {
+        const cityData = CitiesService.getCityLngLat(sortedTrips[ind].city || sortedTrips[ind].country);
+        if (cityData) {
+          cities.push(cityData);
+          const t = {
+            name: `Toronto - ${cityData.id}`,
+            path: ChartComponent.pointsToPath(torontoPoint, chart.fromLatLonToPoint(cityData))
+          };
+          tripsArray.push(t);
         }
-        counter.set(country, counter.get(country) + 1);
       }
-      counter.forEach((value, country, map) => {
-        this.data.push([country, value]);
-      });
+      this.chart.addSeries({
+        // Specify cities using lat/lon
+        type: 'mappoint',
+        name: 'Cities',
+        dataLabels: {
+          format: '{point.id}'
+        },
+        data: cities
+      } as Highcharts.SeriesMappointOptions);
+
+      chart.addSeries({
+        name: 'Flight routes',
+        type: 'mapline',
+        lineWidth: 2,
+        color: Highcharts.getOptions().colors[3],
+        data: tripsArray,
+      } as Highcharts.SeriesMaplineOptions);
     });
   }
 
   ngOnInit() {
   }
-
 }

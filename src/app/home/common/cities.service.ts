@@ -12063,11 +12063,11 @@ export class CitiesService {
       .find(item => item.toLowerCase() === country.toLowerCase());
   }
 
-  public static getCountryLngLat(country: string) {
+  public static getCityLngLat(country: string): any {
     const res = CITIES.find(item => item.toLowerCase().includes(country.toLowerCase()));
     if (res) {
       const splitted = res.split('/');
-      return [splitted[LNG_INDEX], splitted[LAT_INDEX]];
+      return {id: splitted[CITY_NAME_INDEX], lon: +splitted[LNG_INDEX], lat: +splitted[LAT_INDEX]};
     }
     return res;
   }
