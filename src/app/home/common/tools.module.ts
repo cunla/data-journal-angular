@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatIconModule, MatIconRegistry} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DATE_FORMATS} from './dates';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {CitiesService} from './cities.service';
+import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 
 
 @NgModule({

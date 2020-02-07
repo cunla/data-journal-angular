@@ -38,9 +38,8 @@ export class ChartComponent implements OnInit {
     credits: {enabled: false},
     chart: {map: mapWorld},
     title: {text: 'Countries visited'},
-    mapNavigation: {
-      enabled: true,
-    },
+    mapNavigation: {enabled: true,},
+    scrollbar: {enabled: true},
     tooltip: {
       formatter: function () {
         const p = <any>this.point;

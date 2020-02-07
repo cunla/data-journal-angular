@@ -2,14 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TripsListComponent} from './list/trips-list.component';
 import {RouterModule, Routes} from '@angular/router';
-import {
-  MatButtonModule,
-  MatDialogModule,
-  MatInputModule,
-  MatListModule,
-  MatSelectModule,
-  MatSliderModule
-} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TripsService} from './trips.service';
 import {EditTripComponent} from './edit-trip/edit-trip.component';
@@ -25,6 +17,12 @@ import {HomeGuard} from '../guard/home.guard';
 import {HomeGuardModule} from '../guard/home.guard.module';
 import {ToolsModule} from "../common/tools.module";
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
+import {MatListModule} from "@angular/material/list";
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
