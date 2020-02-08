@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
 import {AddressInterface, AddressService} from '../address.service';
 import {Dates} from '../../common/dates';
-import {COUNTRIES, CountriesService} from '../../common/countries.service';
+import {CitiesService} from "../../common/cities.service";
 
 @Component({
   selector: 'app-edit-address',
@@ -15,16 +15,12 @@ import {COUNTRIES, CountriesService} from '../../common/countries.service';
 export class EditAddressComponent implements OnInit {
   @Input() address: AddressInterface;
   addressForm: FormGroup;
-  filteredOptions: Observable<string[][]>;
-  nameToIsoMap: Map<string, string>;
-  _filter = CountriesService.filterCountries;
+  filteredOptions: Observable<any[]>;
+  _filter = CitiesService.filterCities;
 
   constructor(public addressService: AddressService,
-              private fb: FormBuilder,
-  ) {
-    this.nameToIsoMap = new Map<string, string>(
-      COUNTRIES.map(option => [option.name, option.iso.toLowerCase()] as [string, string])
-    );
+              private fb: FormBuilder,) {
+
   }
 
   ngOnInit() {
@@ -32,7 +28,7 @@ export class EditAddressComponent implements OnInit {
   }
 
   onSubmit(value) {
-    value.countryCode = this.nameToIsoMap.get(value.country);
+    value.location = CitiesService.filterLocation(value.locationName);
     value.start = moment(value.start).toDate();
     value.end = value.end ? moment(value.end).toDate() : value.end;
     if (this.address.id === null || this.address.id === undefined) {
@@ -55,9 +51,8 @@ export class EditAddressComponent implements OnInit {
 
   private createForm() {
     this.addressForm = this.fb.group({
-      country: [this.address.country, Validators.required],
-      state: [this.address.state,],
-      city: [this.address.city,],
+      location: [this.address.location,],
+      locationName: [this.address.locationName, Validators.required],
       address: [this.address.address, Validators.required],
       start: [this.address.start, Validators.required],
       end: [this.address.end,],
@@ -66,7 +61,7 @@ export class EditAddressComponent implements OnInit {
         Dates.dateLessThanValidator('start', 'end'),
       ])
     });
-    this.filteredOptions = this.addressForm.get('country').valueChanges.pipe(
+    this.filteredOptions = this.addressForm.get('locationName').valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );

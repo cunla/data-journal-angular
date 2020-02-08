@@ -25,10 +25,6 @@ export interface TripInterface {
   end: Date;
   locationName: string;
   location: any;
-  countryCode: string;
-  country: string;
-  state: string;
-  city: string;
   purpose: string;
 }
 
@@ -39,10 +35,6 @@ export const EMPTY_TRIP: TripInterface = {
   end: null,
   locationName: '',
   location: null,
-  countryCode: '',
-  country: '',
-  state: '',
-  city: '',
   purpose: '',
 };
 

@@ -25,10 +25,8 @@ export interface AddressInterface {
   id: number;
   start: Date;
   end: Date;
-  countryCode: string;
-  country: string;
-  state: string;
-  city: string;
+  locationName: string;
+  location: any;
   address: string;
 }
 
@@ -37,10 +35,8 @@ export const EMPTY_ADDRESS: AddressInterface = {
   id: null,
   start: null,
   end: null,
-  countryCode: '',
-  country: '',
-  state: '',
-  city: '',
+  locationName: '',
+  location: null,
   address: '',
 };
 

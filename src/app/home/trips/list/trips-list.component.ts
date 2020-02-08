@@ -41,13 +41,13 @@ export class TripsListComponent implements OnInit {
     const res = new Map<string, number>();
     this.trips.data.subscribe((trips) => {
       trips.forEach(trip => {
-        if (!res.has(trip.country)) {
-          res.set(trip.country, 0);
+        if (!res.has(trip.location.country)) {
+          res.set(trip.location.country, 0);
         }
         const end = moment.min(moment(trip.end), moment([year, 11, 31]));
         const start = moment.max(moment(trip.start), moment([year, 0, 1]));
         const days = end.diff(start);
-        res.set(trip.country, res.get(trip.country) + days);
+        res.set(trip.location.country, res.get(trip.location.country) + days);
       });
     });
     return res;

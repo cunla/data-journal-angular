@@ -30,7 +30,6 @@ export class EditTripComponent implements OnInit {
     value.location = CitiesService.filterLocation(value.locationName);
     value.start = moment(value.start).toDate();
     value.end = value.end ? moment(value.end).toDate() : value.end;
-    console.log(value);
     if (this.trip.id === null || this.trip.id === undefined) {
       console.log('Saving trip', value);
       this.trips.create(value).then(
@@ -51,11 +50,8 @@ export class EditTripComponent implements OnInit {
 
   private createForm() {
     this.tripForm = this.fb.group({
-
       location: [this.trip.location,],
       locationName: [this.trip.locationName, Validators.required],
-      state: [this.trip.state,],
-      city: [this.trip.city,],
       purpose: [this.trip.purpose, Validators.required],
       start: [this.trip.start, Validators.required],
       end: [this.trip.end,],
