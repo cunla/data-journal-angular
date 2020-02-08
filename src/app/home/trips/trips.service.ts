@@ -23,6 +23,8 @@ export interface TripInterface {
   id: number;
   start: Date;
   end: Date;
+  locationName: string;
+  location: any;
   countryCode: string;
   country: string;
   state: string;
@@ -35,6 +37,8 @@ export const EMPTY_TRIP: TripInterface = {
   id: null,
   start: null,
   end: null,
+  locationName: '',
+  location: null,
   countryCode: '',
   country: '',
   state: '',

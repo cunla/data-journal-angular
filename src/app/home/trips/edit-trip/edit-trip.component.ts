@@ -15,8 +15,7 @@ import {CitiesService} from '../../common/cities.service';
 export class EditTripComponent implements OnInit {
   @Input() trip: TripInterface;
   tripForm: FormGroup;
-  filteredOptions: Observable<string[][]>;
-  nameToIsoMap: Map<string, string>;
+  filteredOptions: Observable<any[]>;
   _filter = CitiesService.filterCities;
 
   constructor(public trips: TripsService,
@@ -28,9 +27,10 @@ export class EditTripComponent implements OnInit {
   }
 
   onSubmit(value) {
-    value.countryCode = this.nameToIsoMap.get(value.country);
+    value.location = CitiesService.filterLocation(value.locationName);
     value.start = moment(value.start).toDate();
     value.end = value.end ? moment(value.end).toDate() : value.end;
+    console.log(value);
     if (this.trip.id === null || this.trip.id === undefined) {
       console.log('Saving trip', value);
       this.trips.create(value).then(
@@ -51,7 +51,9 @@ export class EditTripComponent implements OnInit {
 
   private createForm() {
     this.tripForm = this.fb.group({
-      country: [this.trip.country, Validators.required],
+
+      location: [this.trip.location,],
+      locationName: [this.trip.locationName, Validators.required],
       state: [this.trip.state,],
       city: [this.trip.city,],
       purpose: [this.trip.purpose, Validators.required],
@@ -62,10 +64,9 @@ export class EditTripComponent implements OnInit {
         Dates.dateLessThanValidator('start', 'end'),
       ])
     });
-    this.filteredOptions = this.tripForm.get('country').valueChanges.pipe(
+    this.filteredOptions = this.tripForm.get('locationName').valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
   }
-
 }

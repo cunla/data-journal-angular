@@ -12044,6 +12044,7 @@ export class CitiesService {
       .map(item => {
         const data = item.split('/');
         return {
+          locationName: `${data[CITY_NAME_INDEX]}, ${data[STATE_NAME_INDEX]}, ${data[COUNTRY_NAME_INDEX]}`,
           city: data[CITY_NAME_INDEX],
           state: data[STATE_NAME_INDEX],
           country: data[COUNTRY_NAME_INDEX],
@@ -12057,12 +12058,34 @@ export class CitiesService {
     return res.slice(0, 10);
   }
 
+  public static filterLocation(value: string): any {
+    const res = CITIES
+      .map(item => {
+        const data = item.split('/');
+        return {
+          locationName: `${data[CITY_NAME_INDEX]}, ${data[STATE_NAME_INDEX]}, ${data[COUNTRY_NAME_INDEX]}`,
+          city: data[CITY_NAME_INDEX],
+          state: data[STATE_NAME_INDEX],
+          country: data[COUNTRY_NAME_INDEX],
+          iso2: data[ISO2_INDEX],
+          iso3: data[ISO3_INDEX],
+          lat: +data[LAT_INDEX],
+          lng: +data[LNG_INDEX],
+          population: +data[POPULATION_INDEX],
+        };
+      })
+      .find(item => item.locationName === value);
+    return res;
+  }
+
+
   public static getCountry(country: string) {
     return CITIES
       .map(item => item.split('/')[COUNTRY_NAME_INDEX].toLowerCase())
       .find(item => item.toLowerCase() === country.toLowerCase());
   }
 
+  //todo Remove after setting toronto point as home
   public static getCityLngLat(country: string): any {
     const res = CITIES.find(item => item.toLowerCase().includes(country.toLowerCase()));
     if (res) {

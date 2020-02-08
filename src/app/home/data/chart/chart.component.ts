@@ -19,7 +19,6 @@ window.proj4 = proj4;
 MapModule(Highcharts);
 const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
 
-
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -40,6 +39,7 @@ export class ChartComponent implements OnInit {
     title: {text: 'Countries visited'},
     mapNavigation: {enabled: true,},
     scrollbar: {enabled: true},
+    yAxis: {scrollbar: {enabled: true}},
     tooltip: {
       formatter: function () {
         const p = <any>this.point;
@@ -78,7 +78,11 @@ export class ChartComponent implements OnInit {
       const torontoPoint = chart.fromLatLonToPoint(torontoLatLng);
       // tslint:disable-next-line:forin
       for (const ind in sortedTrips) {
-        const cityData = CitiesService.getCityLngLat(sortedTrips[ind].city || sortedTrips[ind].country);
+        const cityData = {
+          id: sortedTrips[ind].location.city,
+          lon: +sortedTrips[ind].location.lng,
+          lat: +sortedTrips[ind].location.lat,
+        };
         if (cityData) {
           cities.push(cityData);
           const t = {

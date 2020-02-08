@@ -39,17 +39,16 @@
     </div>
   </div>
 
-  <div class="col col-xs-2">
-    <mat-icon *ngIf="trip.countryCode" [svgIcon]="'flag-'+trip.countryCode"></mat-icon>
-    {{trip.country}} <span *ngIf="trip.state">({{trip.state}})</span>
+  <div class="col col-md-4">
+    <mat-icon *ngIf="trip.location?.iso2" [svgIcon]="'flag-'+trip.location.iso2.toLowerCase()"></mat-icon>
+    {{trip.location?.city}},
+    {{trip.location?.state}},
+    {{trip.location?.country}}
   </div>
-  <div class="col col-xs-2">
-    {{trip.city}}
-  </div>
-  <div class="col col-xs-2">
+  <div class="col col-md-2">
     {{trip.purpose}}
   </div>
-  <div class="col col-xs-2">
+  <div class="col col-md-2">
     <button color="primary" mat-icon-button
             aria-label="Edit"
             (click)="trip.editMode=true">

@@ -3,30 +3,26 @@
         [formGroup]="tripForm" novalidate>
     <div class="row">
       <mat-form-field class="col col-md-2">
-        <input formControlName="start" matInput [matDatepicker]="picker1" placeholder="Starting date">
+        <input formControlName="start" matInput readonly [matDatepicker]="picker1" placeholder="Starting date">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field class="col col-md-2">
-        <input formControlName="end" matInput [matDatepicker]="picker2" placeholder="Ending date">
+        <input formControlName="end" matInput readonly [matDatepicker]="picker2" placeholder="Ending date">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field class="input-style col col-md-3">
-        <input type="text" placeholder="Pick a country" aria-label="Country"
-               matInput formControlName="country" [matAutocomplete]="auto">
+      <mat-form-field class="input-style col col-md-4">
+        <input type="text" placeholder="Pick a location" aria-label="Location"
+               matInput formControlName="locationName" [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let item of filteredOptions | async" [value]="item">
+          <mat-option *ngFor="let item of filteredOptions | async" [value]="item.locationName">
             <mat-icon [svgIcon]="'flag-'+item['iso2'].toLowerCase()"></mat-icon>
-            {{item['city']+', '+item['country']}}
+            {{item['city'] + ', ' + item['state'] + ', ' + item['country']}}
           </mat-option>
         </mat-autocomplete>
-      </mat-form-field>
-
-      <mat-form-field class="input-style col col-md-1">
-        <input formControlName="city" matInput placeholder="City">
       </mat-form-field>
 
       <mat-form-field class="input-style col col-md-2">
