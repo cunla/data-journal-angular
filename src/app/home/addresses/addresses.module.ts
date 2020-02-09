@@ -7,7 +7,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatSliderModule} from '@angular/material/slider';
@@ -17,9 +16,6 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {HomeGuardModule} from '../guard/home.guard.module';
 import {HomeGuard} from '../guard/home.guard';
 import {AddressService} from './address.service';
-import {fas} from '@fortawesome/free-solid-svg-icons';
-import {far} from '@fortawesome/free-regular-svg-icons';
-import {fab} from '@fortawesome/free-brands-svg-icons';
 import {ToolsModule} from '../common/tools.module';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -37,7 +33,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    FontAwesomeModule,
     MatButtonModule,
     MatInputModule,
     MatSliderModule,
@@ -58,8 +53,4 @@ const routes: Routes = [
   ],
 })
 export class AddressesModule {
-  constructor(library: FaIconLibrary) {
-    // Add an icon to the library for convenient access in other components
-    library.addIconPacks(fas, far, fab);
-  }
 }

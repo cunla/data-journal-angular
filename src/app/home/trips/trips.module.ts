@@ -7,10 +7,6 @@ import {TripsService} from './trips.service';
 import {EditTripComponent} from './edit-trip/edit-trip.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {TripComponent} from './trip/trip.component';
-import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {fas} from '@fortawesome/free-solid-svg-icons';
-import {far} from '@fortawesome/free-regular-svg-icons';
-import {fab} from '@fortawesome/free-brands-svg-icons';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {HomeGuard} from '../guard/home.guard';
@@ -38,7 +34,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FontAwesomeModule,
     MatButtonModule,
     MatInputModule,
     MatSliderModule,
@@ -60,8 +55,4 @@ const routes: Routes = [
   ],
 })
 export class TripsModule {
-  constructor(library: FaIconLibrary) {
-    // Add an icon to the library for convenient access in other components
-    library.addIconPacks(fas, far, fab);
-  }
 }

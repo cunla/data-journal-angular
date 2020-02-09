@@ -9,7 +9,6 @@ import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './auth/auth.module';
 import {HomeModule} from './home/home.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {PrivacyPolicyModule} from "./privacy-policy/privacy-policy.module";
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
@@ -30,7 +29,6 @@ import {MatListModule} from '@angular/material/list';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
-    FontAwesomeModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
