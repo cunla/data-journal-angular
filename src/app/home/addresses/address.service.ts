@@ -7,6 +7,7 @@ import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {containsCaseInsensitive} from "../common/string.tools";
+import {LocationInterface} from "../common/cities.service";
 
 export const ADDRESS_HISTORY_PATH = 'address-history';
 
@@ -26,7 +27,7 @@ export interface AddressInterface {
   start: Date;
   end: Date;
   locationName: string;
-  location: any;
+  location: LocationInterface;
   address: string;
 }
 
@@ -173,9 +174,8 @@ export class AddressService {
     this.mapAndUpdate(first);
     // Create the observable array for consumption in components
     this.data = this._data.asObservable().scan((acc, values) => {
-      const val = values.filter(item => {
-        return containsCaseInsensitive(item.country, this.query.searchValue)
-          || containsCaseInsensitive(item.city, this.query.searchValue)
+      const val = values.filter((item: AddressInterface) => {
+        return containsCaseInsensitive(item.locationName, this.query.searchValue)
           || containsCaseInsensitive(item.address, this.query.searchValue);
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);

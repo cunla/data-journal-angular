@@ -7,6 +7,7 @@ import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {containsCaseInsensitive} from '../common/string.tools';
+import {LocationInterface} from "../common/cities.service";
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -24,7 +25,7 @@ export interface TripInterface {
   start: Date;
   end: Date;
   locationName: string;
-  location: any;
+  location: LocationInterface;
   purpose: string;
 }
 
@@ -171,10 +172,9 @@ export class TripsService {
     this.mapAndUpdate(first);
     // Create the observable array for consumption in components
     this.data = this._data.asObservable().scan((acc, values) => {
-      const val = values.filter(item => {
-        return containsCaseInsensitive(item.country, this.query.searchValue)
-          || containsCaseInsensitive(item.purpose, this.query.searchValue)
-          || containsCaseInsensitive(item.city, this.query.searchValue);
+      const val = values.filter((item: TripInterface) => {
+        return containsCaseInsensitive(item.locationName, this.query.searchValue)
+          || containsCaseInsensitive(item.purpose, this.query.searchValue);
       });
       return this.query.prepend ? val.concat(acc) : acc.concat(val);
     });

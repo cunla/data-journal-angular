@@ -1,35 +1,23 @@
-<div class="row" *ngIf="!address.editMode">
-  <div class="col col-md-4">
-    <div class="row">
-      <div class="col col-xs-5">
-        {{address.start | date: 'yyyy-MM-dd'}}
-      </div>
-      <div class="col col-xs-5">
-        {{address.end | date: 'yyyy-MM-dd'}}
-      </div>
-    </div>
-  </div>
+<mat-list-item *ngIf="!address.editMode">
+  <p mat-line>
+    {{address.start | date: 'yyyy-MM-dd'}} - {{address.end | date: 'yyyy-MM-dd'}}
+    ({{daysDiff(address.start, address.end)}} days)
+  </p>
 
-  <div class="col col-md-4">
+  <p mat-line>
     <mat-icon *ngIf="address.location?.iso2" [svgIcon]="'flag-'+address.location.iso2.toLowerCase()"></mat-icon>
     {{address.location?.city}},
     {{address.location?.state}},
     {{address.location?.country}}
-  </div>
-  <div class="col col-xs-3">
+  </p>
+  <p mat-line>
     {{address.address}}
-  </div>
-  <div class="col col-xs-1">
-    <button color="primary" mat-icon-button
-            aria-label="Edit"
-            (click)="address.editMode=true">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button color="warn" mat-icon-button
-            aria-label="Delete"
-            (click)="delete()">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
-</div>
+  </p>
+  <button color="primary" mat-icon-button aria-label="Edit" (click)="address.editMode=true">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button color="warn" mat-icon-button aria-label="Delete" (click)="delete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</mat-list-item>
 <app-edit-address [address]="address" *ngIf="address.editMode"></app-edit-address>

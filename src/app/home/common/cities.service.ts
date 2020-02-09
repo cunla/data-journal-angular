@@ -12037,7 +12037,7 @@ export class CitiesService {
   constructor() {
   }
 
-  public static filterCities(value: string): any[] {
+  public static filterCities(value: string): LocationInterface[] {
     const filterValue = value ? value.toLowerCase() : '';
     const res = CITIES
       .filter(item => containsCaseInsensitive(item, filterValue))
@@ -12058,7 +12058,7 @@ export class CitiesService {
     return res.slice(0, 10);
   }
 
-  public static filterLocation(value: string): any {
+  public static filterLocation(value: string): LocationInterface {
     const res = CITIES
       .map(item => {
         const data = item.split('/');
@@ -12105,4 +12105,16 @@ export class CitiesService {
     return self.indexOf(value) === index;
   }
 
+}
+
+export interface LocationInterface {
+  country: string;
+  city: string;
+  state: string;
+  iso2: string;
+  iso3: string;
+  locationName: string;
+  lat: number;
+  lng: number;
+  population: number;
 }

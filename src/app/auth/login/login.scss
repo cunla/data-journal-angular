@@ -8,7 +8,13 @@ h1 {
 .login-form {
   padding-left: 30px;
   padding-right: 30px;
-  mat-form-field{
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 20px;
     width: 100%;
   }
 }
@@ -16,3 +22,5 @@ h1 {
 .error {
   color: red;
 }
+
+

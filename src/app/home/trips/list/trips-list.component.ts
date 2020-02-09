@@ -30,7 +30,7 @@ export class TripsListComponent implements OnInit {
   exportCsv() {
     this.trips.data.subscribe(res => {
       const tripsCsv = CsvTools.convertToCsv(res,
-        ['start', 'end', 'country', 'state', 'city', 'purpose']);
+        ['start', 'end', 'locationName', 'purpose']);
       console.log(tripsCsv);
       const blob = new Blob([tripsCsv], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, 'data.csv');

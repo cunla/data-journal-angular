@@ -11,6 +11,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from "@angular/material/button";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -22,15 +23,16 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+    ],
   providers: [AuthService, AuthGuard],
 })
 export class AuthModule {

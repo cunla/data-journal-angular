@@ -5,10 +5,17 @@ h1 {
   margin-bottom: 40px;
 }
 
+
 .login-form {
   padding-left: 30px;
   padding-right: 30px;
-  mat-form-field{
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 20px;
     width: 100%;
   }
 }

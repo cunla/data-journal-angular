@@ -18,6 +18,7 @@ import {HomeGuard} from '../guard/home.guard';
 import {AddressService} from './address.service';
 import {ToolsModule} from '../common/tools.module';
 import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from "@angular/material/list";
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -46,6 +47,7 @@ const routes: Routes = [
     HomeGuardModule,
     ToolsModule,
     MatIconModule,
+    MatListModule,
   ],
   providers: [
     MatDatepickerModule,

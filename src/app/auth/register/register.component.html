@@ -14,15 +14,16 @@
         <label class="error">{{errorMessage}}</label>
       </mat-form-field>
     </p>
-    <p>
-      <button (click)="tryFacebookLogin()" class="btn btn-primary btn-block" type="button">Sign up with Facebook</button>
-    </p>
-    <p>
-      <button (click)="tryGoogleLogin()" class="btn btn-danger btn-block" type="button">Sign up with Google</button>
-    </p>
-    <p>
-      <button (click)="tryTwitterLogin()" class="btn btn-info btn-block" type="button">Sign up with Twitter</button>
-    </p>
+
+    <button mat-raised-button color="primary" (click)="tryFacebookLogin()">
+      Sign up with Facebook
+    </button>
+    <button mat-raised-button color="accent" (click)="tryGoogleLogin()">
+      Sign up with Google
+    </button>
+    <button mat-raised-button color="warn" (click)="tryTwitterLogin()">
+      Sign up with Twitter
+    </button>
     <p>Already have an account? <a href="/auth/login">Login</a></p>
   </form>
 </div>

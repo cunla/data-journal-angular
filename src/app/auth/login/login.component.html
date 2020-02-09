@@ -1,28 +1,26 @@
 <h1>Login to trip journal</h1>
 <div class="login-form">
   <form [formGroup]="loginForm">
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>email</mat-label>
-        <input matInput formControlName="email" type="email" placeholder="email">
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" placeholder="Password">
-        <label class="error">{{errorMessage}}</label>
-      </mat-form-field>
-    </p>
-    <p>
-      <button (click)="tryFacebookLogin()" class="btn btn-primary btn-block" type="button">Login with Facebook</button>
-    </p>
-    <p>
-      <button (click)="tryGoogleLogin()" class="btn btn-danger btn-block" type="button">Login with Google</button>
-    </p>
-    <p>
-      <button (click)="tryTwitterLogin()" class="btn btn-info btn-block" type="button">Login with Twitter</button>
-    </p>
+    <mat-form-field appearance="outline">
+      <mat-label>email</mat-label>
+      <input matInput formControlName="email" type="email" placeholder="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" placeholder="Password">
+      <label class="error">{{errorMessage}}</label>
+    </mat-form-field>
+
+    <button mat-raised-button
+            color="primary" (click)="tryFacebookLogin()">
+      Login with Facebook
+    </button>
+    <button mat-raised-button color="accent" (click)="tryGoogleLogin()">
+      Login with Google
+    </button>
+    <button mat-raised-button color="warn" (click)="tryTwitterLogin()">
+      Login with Twitter
+    </button>
     <p>No account yet? <a href="/auth/register">Create an account</a></p>
   </form>
 </div>

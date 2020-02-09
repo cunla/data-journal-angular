@@ -29,7 +29,7 @@ export class AddressListComponent implements OnInit {
   exportCsv() {
     this.addressService.data.subscribe(res => {
       const tripsCsv = CsvTools.convertToCsv(res,
-        ['start', 'end', 'country', 'state', 'city', 'address']);
+        ['start', 'end', 'locationName', 'address']);
       console.log(tripsCsv);
       const blob = new Blob([tripsCsv], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, 'data.csv');
