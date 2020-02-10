@@ -19,6 +19,10 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -32,6 +36,8 @@ const routes: Routes = [
     TripComponent,
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     CommonModule,
     RouterModule.forChild(routes),
     MatButtonModule,

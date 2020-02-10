@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import * as moment from 'moment';
 import {Dates} from '../../common/dates';
-import {CitiesService} from '../../common/cities.service';
+import {CitiesService, LocationInterface} from '../../common/cities.service';
 
 @Component({
   selector: 'app-edit-trip',
@@ -27,7 +27,13 @@ export class EditTripComponent implements OnInit {
   }
 
   onSubmit(value) {
-    value.location = CitiesService.filterLocation(value.locationName);
+    const location: LocationInterface = CitiesService.filterLocation(value.locationName);
+    value.city = location.city;
+    value.state = location.state;
+    value.country = location.country;
+    value.countryCode = location.iso2;
+    value.lat = location.lat;
+    value.lng = location.lng;
     value.start = moment(value.start).toDate();
     value.end = value.end ? moment(value.end).toDate() : value.end;
     if (this.trip.id === null || this.trip.id === undefined) {
@@ -50,7 +56,6 @@ export class EditTripComponent implements OnInit {
 
   private createForm() {
     this.tripForm = this.fb.group({
-      location: [this.trip.location,],
       locationName: [this.trip.locationName, Validators.required],
       purpose: [this.trip.purpose, Validators.required],
       start: [this.trip.start, Validators.required],

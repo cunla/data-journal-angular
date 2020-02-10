@@ -7,7 +7,6 @@ import 'rxjs/add/operator/take';
 // import * as firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {containsCaseInsensitive} from '../common/string.tools';
-import {LocationInterface} from "../common/cities.service";
 
 export interface QueryConfig {
   path: string; //  path to collection
@@ -25,7 +24,12 @@ export interface TripInterface {
   start: Date;
   end: Date;
   locationName: string;
-  location: LocationInterface;
+  city: string;
+  state: string;
+  country: string;
+  countryCode: string;
+  lat: number;
+  lng: number;
   purpose: string;
 }
 
@@ -35,7 +39,12 @@ export const EMPTY_TRIP: TripInterface = {
   start: null,
   end: null,
   locationName: '',
-  location: null,
+  city: null,
+  state: null,
+  country: null,
+  countryCode: null,
+  lat: null,
+  lng: null,
   purpose: '',
 };
 

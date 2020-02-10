@@ -18,7 +18,10 @@ import {HomeGuard} from '../guard/home.guard';
 import {AddressService} from './address.service';
 import {ToolsModule} from '../common/tools.module';
 import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from "@angular/material/list";
+import {MatListModule} from '@angular/material/list';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
@@ -32,6 +35,8 @@ const routes: Routes = [
     EditAddressComponent,
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     RouterModule.forChild(routes),
     CommonModule,
     MatButtonModule,

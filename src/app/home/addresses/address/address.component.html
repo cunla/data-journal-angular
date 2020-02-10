@@ -5,11 +5,10 @@
   </p>
 
   <p mat-line>
-    <mat-icon *ngIf="address.location?.iso2" [svgIcon]="'flag-'+address.location.iso2.toLowerCase()"></mat-icon>
-    {{address.location?.city}},
-    {{address.location?.state}},
-    {{address.location?.country}}
+    <mat-icon *ngIf="address.countryCode" [svgIcon]="'flag-'+address.countryCode.toLowerCase()"></mat-icon>
+    {{address.city}}, {{address.state}}, {{address.country}}
   </p>
+
   <p mat-line>
     {{address.address}}
   </p>

@@ -79,9 +79,9 @@ export class ChartComponent implements OnInit {
       // tslint:disable-next-line:forin
       for (const ind in sortedTrips) {
         const cityData = {
-          id: sortedTrips[ind].location.city,
-          lon: +sortedTrips[ind].location.lng,
-          lat: +sortedTrips[ind].location.lat,
+          id: sortedTrips[ind].city,
+          lon: +sortedTrips[ind].lng,
+          lat: +sortedTrips[ind].lat,
         };
         if (cityData) {
           cities.push(cityData);

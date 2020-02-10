@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
 import {AddressInterface, AddressService} from '../address.service';
 import {Dates} from '../../common/dates';
-import {CitiesService} from "../../common/cities.service";
+import {CitiesService, LocationInterface} from '../../common/cities.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -28,7 +28,13 @@ export class EditAddressComponent implements OnInit {
   }
 
   onSubmit(value) {
-    value.location = CitiesService.filterLocation(value.locationName);
+    const location: LocationInterface = CitiesService.filterLocation(value.locationName);
+    value.city = location.city;
+    value.state = location.state;
+    value.country = location.country;
+    value.countryCode = location.iso2;
+    value.lat = location.lat;
+    value.lng = location.lng;
     value.start = moment(value.start).toDate();
     value.end = value.end ? moment(value.end).toDate() : value.end;
     if (this.address.id === null || this.address.id === undefined) {
@@ -51,7 +57,6 @@ export class EditAddressComponent implements OnInit {
 
   private createForm() {
     this.addressForm = this.fb.group({
-      location: [this.address.location,],
       locationName: [this.address.locationName, Validators.required],
       address: [this.address.address, Validators.required],
       start: [this.address.start, Validators.required],
