@@ -83,7 +83,7 @@ export class ChartComponent implements OnInit {
           lon: +sortedTrips[ind].lng,
           lat: +sortedTrips[ind].lat,
         };
-        if (cityData) {
+        if (cityData && cityData.lat && cityData.lon) {
           cities.push(cityData);
           const t = {
             name: `Toronto - ${cityData.id}`,
