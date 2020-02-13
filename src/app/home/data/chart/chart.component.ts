@@ -26,13 +26,7 @@ const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
 })
 export class ChartComponent implements OnInit {
   private chart: Chart;
-
-  constructor(private tripsService: TripsService) {
-
-  }
-
   Highcharts: typeof Highcharts = Highcharts; // required
-  chartConstructor = 'mapChart';
   chartOptions: Highcharts.Options = {
     credits: {enabled: false},
     chart: {map: mapWorld},
@@ -51,6 +45,10 @@ export class ChartComponent implements OnInit {
     },
     series: [{name: 'Countries', allAreas: true,} as Highcharts.SeriesMapOptions]
   };
+
+  constructor(private tripsService: TripsService) {
+
+  }
 
   private static sortByDates(a: TripInterface, b: TripInterface) {
     if (a.start > b.start) {
@@ -75,43 +73,59 @@ export class ChartComponent implements OnInit {
     const tripsArray = [];
     this.tripsService.data.subscribe(trips => {
       const sortedTrips = trips.sort(ChartComponent.sortByDates);
-      const torontoPoint = chart.fromLatLonToPoint(torontoLatLng);
       // tslint:disable-next-line:forin
       for (const ind in sortedTrips) {
-        const cityData = {
-          id: sortedTrips[ind].city,
-          lon: +sortedTrips[ind].lng,
-          lat: +sortedTrips[ind].lat,
-        };
+        const cityData = this.itemToPoint(sortedTrips[ind]);
         if (cityData && cityData.lat && cityData.lon) {
           cities.push(cityData);
-          const t = {
-            name: `Toronto - ${cityData.id}`,
-            path: ChartComponent.pointsToPath(torontoPoint, chart.fromLatLonToPoint(cityData))
-          };
+          const t = this.createTrip(torontoLatLng, cityData);
           tripsArray.push(t);
         }
       }
-      this.chart.addSeries({
-        // Specify cities using lat/lon
-        type: 'mappoint',
-        name: 'Cities',
-        dataLabels: {
-          format: '{point.id}'
-        },
-        data: cities
-      } as Highcharts.SeriesMappointOptions);
-
-      chart.addSeries({
-        name: 'Flight routes',
-        type: 'mapline',
-        lineWidth: 2,
-        color: Highcharts.getOptions().colors[3],
-        data: tripsArray,
-      } as Highcharts.SeriesMaplineOptions);
+      this.addCitiesSeries(cities);
+      this.addPathsSeries(tripsArray);
     });
   }
 
   ngOnInit() {
+  }
+
+  private itemToPoint(item: TripInterface) {
+    return {
+      id: item.city,
+      lon: +item.lng,
+      lat: +item.lat,
+    }
+  }
+
+  private addCitiesSeries(cities: any[]) {
+    this.chart.addSeries({
+      // Specify cities using lat/lon
+      type: 'mappoint',
+      name: 'Cities',
+      dataLabels: {
+        format: '{point.id}'
+      },
+      data: cities
+    } as Highcharts.SeriesMappointOptions);
+  }
+
+  private addPathsSeries(tripsArray: any[]) {
+    this.chart.addSeries({
+      name: 'Flight routes',
+      type: 'mapline',
+      lineWidth: 2,
+      color: Highcharts.getOptions().colors[3],
+      data: tripsArray,
+    } as Highcharts.SeriesMaplineOptions);
+  }
+
+  private createTrip(origin: any, target: { lon: number; id: string; lat: number }) {
+    return {
+      name: `${origin.id} - ${target.id}`,
+      path: ChartComponent.pointsToPath(
+        this.chart.fromLatLonToPoint(origin),
+        this.chart.fromLatLonToPoint(target))
+    }
   }
 }
