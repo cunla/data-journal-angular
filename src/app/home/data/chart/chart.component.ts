@@ -4,7 +4,7 @@ import * as proj4x from 'proj4';
 import * as Highcharts from 'highcharts';
 import {Chart} from 'highcharts';
 import MapModule from 'highcharts/modules/map';
-import {CitiesService} from '../../common/cities.service';
+import {AddressInterface, AddressService} from '../../addresses/address.service';
 
 declare var require: any;
 
@@ -46,8 +46,8 @@ export class ChartComponent implements OnInit {
     series: [{name: 'Countries', allAreas: true,} as Highcharts.SeriesMapOptions]
   };
 
-  constructor(private tripsService: TripsService) {
-
+  constructor(private tripsService: TripsService,
+              private addressService: AddressService,) {
   }
 
   private static sortByDates(a: TripInterface, b: TripInterface) {
@@ -68,34 +68,37 @@ export class ChartComponent implements OnInit {
 
   logChartInstance(chart: Highcharts.Chart) {
     this.chart = chart;
-    const torontoLatLng = CitiesService.getCityLngLat('Toronto');
-    const cities = [torontoLatLng,];
+    // const torontoLatLng = CitiesService.getCityLngLat('Toronto');
+
+    const cities = new Set<any>();
     const tripsArray = [];
-    this.tripsService.data.subscribe(trips => {
-      const sortedTrips = trips.sort(ChartComponent.sortByDates);
-      // tslint:disable-next-line:forin
-      for (const ind in sortedTrips) {
-        const cityData = this.itemToPoint(sortedTrips[ind]);
-        if (cityData && cityData.lat && cityData.lon) {
-          cities.push(cityData);
-          const t = this.createTrip(torontoLatLng, cityData);
-          tripsArray.push(t);
+    this.addressService.data.subscribe(addresses => {
+      this.tripsService.data.subscribe(trips => {
+        const sortedTrips = trips.sort(ChartComponent.sortByDates);
+        // tslint:disable-next-line:forin
+        for (const ind in sortedTrips) {
+          const originCity = this.findOrigin(addresses, sortedTrips[ind]);
+          const targetCity = this.itemToPoint(sortedTrips[ind]);
+          if (targetCity && targetCity.lat && targetCity.lon) {
+            cities.add(targetCity);
+            this.addTripIfRelevant(tripsArray, originCity, targetCity);
+          }
         }
-      }
-      this.addCitiesSeries(cities);
-      this.addPathsSeries(tripsArray);
+        this.addCitiesSeries(Array.from(cities));
+        this.addPathsSeries(tripsArray);
+      });
     });
   }
 
   ngOnInit() {
   }
 
-  private itemToPoint(item: TripInterface) {
+  private itemToPoint(item: TripInterface | AddressInterface) {
     return {
       id: item.city,
       lon: +item.lng,
       lat: +item.lat,
-    }
+    };
   }
 
   private addCitiesSeries(cities: any[]) {
@@ -120,12 +123,31 @@ export class ChartComponent implements OnInit {
     } as Highcharts.SeriesMaplineOptions);
   }
 
-  private createTrip(origin: any, target: { lon: number; id: string; lat: number }) {
-    return {
+  private addTripIfRelevant(tripsArray: Array<any>, origin: any, target: any) {
+    if (!origin || origin.id === target.id) {
+      return;
+    }
+    const t = {
       name: `${origin.id} - ${target.id}`,
       path: ChartComponent.pointsToPath(
         this.chart.fromLatLonToPoint(origin),
         this.chart.fromLatLonToPoint(target))
+    };
+    tripsArray.push(t);
+  }
+
+  private findOrigin(addresses: AddressInterface[], trip: TripInterface) {
+    let ind = 0;
+    while (ind < addresses.length) {
+      if (addresses[ind].start <= trip.start &&
+        (!addresses[ind].end || addresses[ind].end >= trip.end)) {
+        const res = this.itemToPoint(addresses[ind]);
+        // console.log(`Found address ${ind}: ${res.id} for trip ${trip.city}`);
+        return res;
+      }
+      ++ind;
     }
+    console.warn('returning last address or no addresses in list');
+    return (addresses.length === 0) ? null : this.itemToPoint(addresses[addresses.length - 1]);
   }
 }
