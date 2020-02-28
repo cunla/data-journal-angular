@@ -36,7 +36,7 @@ const routes: Routes = [
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
     RouterModule.forChild(routes),
     CommonModule,
     MatButtonModule,
