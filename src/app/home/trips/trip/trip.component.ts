@@ -16,7 +16,6 @@ export class TripComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.trip);
   }
 
   delete() {

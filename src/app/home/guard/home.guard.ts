@@ -16,7 +16,7 @@ export class HomeGuard implements CanActivate {
       if (this.userId !== null) {
         resolve(true);
       } else {
-        this.router.navigate(['/auth/login']).then();
+        this.router.navigateByUrl('/auth/login').then();
         resolve(false);
       }
     });

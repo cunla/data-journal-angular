@@ -9,7 +9,7 @@ import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './auth/auth.module';
 import {HomeModule} from './home/home.module';
-import {PrivacyPolicyModule} from './privacy-policy/privacy-policy.module';
+import {PrivacyPolicyModule} from "./privacy-policy/privacy-policy.module";
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -24,7 +24,10 @@ import {MatListModule} from '@angular/material/list';
     HomeModule,
     AuthModule,
     BrowserModule,
-    RouterModule.forRoot(rootRouterConfig, {useHash: false}),
+    RouterModule.forRoot(rootRouterConfig, {
+      useHash: false,
+      // enableTracing: true,
+    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
