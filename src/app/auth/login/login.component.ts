@@ -55,6 +55,6 @@ export class LoginComponent {
   }
 
   private navigateToUserScreen() {
-    this.ngZone.run(() => this.router.navigateByUrl('/home').then());
+    this.ngZone.run(() => this.router.navigateByUrl('/home').then()).then();
   }
 }
