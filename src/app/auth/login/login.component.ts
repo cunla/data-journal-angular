@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {AuthService} from '../auth.service'
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -15,7 +15,8 @@ export class LoginComponent {
 
   constructor(public authService: AuthService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private ngZone: NgZone) {
     this.createForm();
   }
 
@@ -54,6 +55,6 @@ export class LoginComponent {
   }
 
   private navigateToUserScreen() {
-    this.router.navigateByUrl('/home').then();
+    this.ngZone.run(() => this.router.navigateByUrl('/home').then());
   }
 }

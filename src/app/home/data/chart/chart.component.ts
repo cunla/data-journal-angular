@@ -19,6 +19,17 @@ window.proj4 = proj4;
 MapModule(Highcharts);
 const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
 
+export interface Point {
+  lon: number;
+  id: string;
+  lat: number
+}
+
+export interface Path {
+  name: string;
+  path: string;
+}
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -50,25 +61,8 @@ export class ChartComponent implements OnInit {
               private addressService: AddressService,) {
   }
 
-  private static sortByDates(a: TripInterface, b: TripInterface) {
-    if (a.start > b.start) {
-      return 1;
-    } else if (a.start < b.start) {
-      return -1;
-    } else {
-      return 0;
-    }
-  }
-
-  static pointsToPath(from, to, invertArc = false): string {
-    const arcPointX = (from.x + to.x) / (invertArc ? 2.4 : 1.8);
-    const arcPointY = (from.y + to.y) / (invertArc ? 2.4 : 1.8);
-    return `M${from.x},${from.y}Q${arcPointX} ${arcPointY},${to.x} ${to.y}`;
-  }
-
   logChartInstance(chart: Highcharts.Chart) {
     this.chart = chart;
-    // const torontoLatLng = CitiesService.getCityLngLat('Toronto');
 
     const cities = new Set<any>();
     const tripsArray = [];
@@ -93,7 +87,7 @@ export class ChartComponent implements OnInit {
   ngOnInit() {
   }
 
-  private itemToPoint(item: TripInterface | AddressInterface) {
+  private itemToPoint(item: TripInterface | AddressInterface): Point {
     return {
       id: item.city,
       lon: +item.lng,
@@ -101,7 +95,7 @@ export class ChartComponent implements OnInit {
     };
   }
 
-  private addCitiesSeries(cities: any[]) {
+  private addCitiesSeries(cities: Array<Point>): void {
     this.chart.addSeries({
       // Specify cities using lat/lon
       type: 'mappoint',
@@ -113,7 +107,7 @@ export class ChartComponent implements OnInit {
     } as Highcharts.SeriesMappointOptions);
   }
 
-  private addPathsSeries(tripsArray: any[]) {
+  private addPathsSeries(tripsArray: Array<Path>): void {
     this.chart.addSeries({
       name: 'Flight routes',
       type: 'mapline',
@@ -123,7 +117,7 @@ export class ChartComponent implements OnInit {
     } as Highcharts.SeriesMaplineOptions);
   }
 
-  private addTripIfRelevant(tripsArray: Array<any>, origin: any, target: any) {
+  private addTripIfRelevant(tripsArray: Array<Path>, origin: Point, target: Point): void {
     if (!origin || origin.id === target.id) {
       return;
     }
@@ -149,5 +143,21 @@ export class ChartComponent implements OnInit {
     }
     console.warn('returning last address or no addresses in list');
     return (addresses.length === 0) ? null : this.itemToPoint(addresses[addresses.length - 1]);
+  }
+
+  private static sortByDates(a: TripInterface, b: TripInterface) {
+    if (a.start > b.start) {
+      return 1;
+    } else if (a.start < b.start) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  private static pointsToPath(from, to, invertArc = false): string {
+    const arcPointX = (from.x + to.x) / (invertArc ? 2.4 : 1.8);
+    const arcPointY = (from.y + to.y) / (invertArc ? 2.4 : 1.8);
+    return `M${from.x},${from.y}Q${arcPointX} ${arcPointY},${to.x} ${to.y}`;
   }
 }
