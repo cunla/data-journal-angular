@@ -8,10 +8,16 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  showMenu = false;
 
   constructor(public auth: AuthService,
-              private router: Router,
-  ) {
+              public router: Router,) {
+    this.auth.loggedinSubject().subscribe((loggedin) => {
+      console.log('loggedinSubject: ', loggedin);
+      this.showMenu = loggedin;
+      const url = loggedin ? '/home' : '/auth/login';
+      this.router.navigateByUrl(url).then();
+    });
 
   }
 

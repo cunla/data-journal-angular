@@ -13,8 +13,6 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {HomeGuardModule} from '../guard/home.guard.module';
-import {HomeGuard} from '../guard/home.guard';
 import {AddressService} from './address.service';
 import {ToolsModule} from '../common/tools.module';
 import {MatIconModule} from '@angular/material/icon';
@@ -25,7 +23,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
-  {path: 'list', component: AddressListComponent, canActivate: [HomeGuard]},
+  {path: 'list', component: AddressListComponent,},
 ];
 
 @NgModule({
@@ -49,7 +47,6 @@ const routes: Routes = [
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
-    HomeGuardModule,
     ToolsModule,
     MatIconModule,
     MatListModule,

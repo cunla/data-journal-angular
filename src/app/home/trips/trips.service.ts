@@ -69,8 +69,10 @@ export class TripsService {
   constructor(public db: AngularFirestore,
               public afAuth: AngularFireAuth) {
     const user = JSON.parse(localStorage.getItem('user'));
-    this.userId = user.uid;
-    this.init('trips', 'start', {reverse: true, prepend: false});
+    if(user) {
+      this.userId = user.uid;
+      this.init('trips', 'start', {reverse: true, prepend: false});
+    }
   }
 
   // Initial query sets options and defines the Observable

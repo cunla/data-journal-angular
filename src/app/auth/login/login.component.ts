@@ -1,4 +1,4 @@
-import {Component, NgZone} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from '../auth.service'
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -15,8 +15,7 @@ export class LoginComponent {
 
   constructor(public authService: AuthService,
               private router: Router,
-              private fb: FormBuilder,
-              private ngZone: NgZone) {
+              private fb: FormBuilder,) {
     this.createForm();
   }
 
@@ -29,32 +28,25 @@ export class LoginComponent {
 
   tryFacebookLogin() {
     this.authService.doFacebookLogin().then(res => {
-      this.navigateToUserScreen();
     });
   }
 
   tryTwitterLogin() {
     this.authService.doTwitterLogin().then(res => {
-      this.navigateToUserScreen();
     });
   }
 
   tryGoogleLogin() {
     this.authService.doGoogleLogin().then(res => {
-      this.navigateToUserScreen();
     });
   }
 
   tryLogin(value) {
     this.authService.doLogin(value).then(res => {
-      this.navigateToUserScreen();
-    }, err => {
-      console.log(err);
-      this.errorMessage = err.message;
-    });
-  }
-
-  private navigateToUserScreen() {
-    this.ngZone.run(() => this.router.navigateByUrl('/home').then()).then();
+      },
+      err => {
+        console.log(err);
+        this.errorMessage = err.message;
+      });
   }
 }

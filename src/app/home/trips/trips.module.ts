@@ -9,8 +9,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {TripComponent} from './trip/trip.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {HomeGuard} from '../guard/home.guard';
-import {HomeGuardModule} from '../guard/home.guard.module';
 import {ToolsModule} from '../common/tools.module';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,7 +23,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: 'full'},
-  {path: 'list', component: TripsListComponent, canActivate: [HomeGuard]},
+  {path: 'list', component: TripsListComponent},
 ];
 
 @NgModule({
@@ -49,7 +47,6 @@ const routes: Routes = [
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
-    HomeGuardModule,
     MatIconModule,
     MatListModule,
     ToolsModule,
