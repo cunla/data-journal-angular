@@ -2,18 +2,20 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {ToolsModule} from '../common/tools.module';
-import {ChartComponent} from './chart/chart.component';
 import {HighchartsChartModule} from 'highcharts-angular';
+import {MapchartArcsComponent} from './mapchart-arcs/mapchart-arcs.component';
+import {TripsChartComponent} from './trips-chart/trips-chart.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'map', pathMatch: 'full'},
-  {path: 'map', component: ChartComponent},
+  {path: 'map', component: TripsChartComponent},
 ];
 
 
 @NgModule({
   declarations: [
-    ChartComponent,
+    MapchartArcsComponent,
+    TripsChartComponent,
   ],
   imports: [
     HighchartsChartModule,
@@ -21,8 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ToolsModule,
   ],
-  providers: [
-  ],
+  providers: [],
 })
 export class DataModule {
 }

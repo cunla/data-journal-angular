@@ -1,10 +1,8 @@
-import {TripInterface, TripsService} from '../../trips/trips.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as proj4x from 'proj4';
 import * as Highcharts from 'highcharts';
 import {Chart} from 'highcharts';
 import MapModule from 'highcharts/modules/map';
-import {AddressInterface, AddressService} from '../../addresses/address.service';
 
 declare var require: any;
 
@@ -20,9 +18,14 @@ MapModule(Highcharts);
 const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
 
 export interface Point {
-  lon: number;
   id: string;
+  lon: number;
   lat: number
+}
+
+export interface ArcInterface {
+  origin: Point;
+  target: Point;
 }
 
 export interface Path {
@@ -30,13 +33,15 @@ export interface Path {
   path: string;
 }
 
+
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  selector: 'map-chart-arcs',
+  templateUrl: './mapchart-arcs.component.html',
+  styleUrls: ['./mapchart-arcs.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class MapchartArcsComponent implements OnInit {
   private chart: Chart;
+  @Input('arcs') arcs: Array<ArcInterface>;
   Highcharts: typeof Highcharts = Highcharts; // required
   chartOptions: Highcharts.Options = {
     credits: {enabled: false},
@@ -57,8 +62,7 @@ export class ChartComponent implements OnInit {
     series: [{name: 'Countries', allAreas: true,} as Highcharts.SeriesMapOptions]
   };
 
-  constructor(private tripsService: TripsService,
-              private addressService: AddressService,) {
+  constructor() {
   }
 
   logChartInstance(chart: Highcharts.Chart) {
@@ -66,33 +70,16 @@ export class ChartComponent implements OnInit {
 
     const cities = new Set<any>();
     const tripsArray = [];
-    this.addressService.data.subscribe(addresses => {
-      this.tripsService.data.subscribe(trips => {
-        const sortedTrips = trips.sort(ChartComponent.sortByDates);
-        // tslint:disable-next-line:forin
-        for (const ind in sortedTrips) {
-          const originCity = this.findOrigin(addresses, sortedTrips[ind]);
-          const targetCity = this.itemToPoint(sortedTrips[ind]);
-          if (targetCity && targetCity.lat && targetCity.lon) {
-            cities.add(targetCity);
-            this.addTripIfRelevant(tripsArray, originCity, targetCity);
-          }
-        }
-        this.addCitiesSeries(Array.from(cities));
-        this.addPathsSeries(tripsArray);
-      });
+    this.arcs.forEach((arc: ArcInterface) => {
+      cities.add(arc.target);
+      this.addTripIfRelevant(tripsArray, arc.origin, arc.target);
     });
+
+    this.addCitiesSeries(Array.from(cities));
+    this.addPathsSeries(tripsArray);
   }
 
   ngOnInit() {
-  }
-
-  private itemToPoint(item: TripInterface | AddressInterface): Point {
-    return {
-      id: item.city,
-      lon: +item.lng,
-      lat: +item.lat,
-    };
   }
 
   private addCitiesSeries(cities: Array<Point>): void {
@@ -123,36 +110,11 @@ export class ChartComponent implements OnInit {
     }
     const t = {
       name: `${origin.id} - ${target.id}`,
-      path: ChartComponent.pointsToPath(
+      path: MapchartArcsComponent.pointsToPath(
         this.chart.fromLatLonToPoint(origin),
-        this.chart.fromLatLonToPoint(target))
+        this.chart.fromLatLonToPoint(target)),
     };
     tripsArray.push(t);
-  }
-
-  private findOrigin(addresses: AddressInterface[], trip: TripInterface) {
-    let ind = 0;
-    while (ind < addresses.length) {
-      if (addresses[ind].start <= trip.start &&
-        (!addresses[ind].end || addresses[ind].end >= trip.end)) {
-        const res = this.itemToPoint(addresses[ind]);
-        // console.log(`Found address ${ind}: ${res.id} for trip ${trip.city}`);
-        return res;
-      }
-      ++ind;
-    }
-    console.warn('returning last address or no addresses in list');
-    return (addresses.length === 0) ? null : this.itemToPoint(addresses[addresses.length - 1]);
-  }
-
-  private static sortByDates(a: TripInterface, b: TripInterface) {
-    if (a.start > b.start) {
-      return 1;
-    } else if (a.start < b.start) {
-      return -1;
-    } else {
-      return 0;
-    }
   }
 
   private static pointsToPath(from, to, invertArc = false): string {
