@@ -24,13 +24,15 @@ export interface Point {
 }
 
 export interface ArcInterface {
+  color: string;
   origin: Point;
   target: Point;
 }
 
-export interface Path {
+interface Path {
   name: string;
   path: string;
+  color: string;
 }
 
 
@@ -41,8 +43,11 @@ export interface Path {
 })
 export class MapchartArcsComponent implements OnInit {
   private chart: Chart;
-  @Input('arcs') arcs: Array<ArcInterface>;
+
+  @Input('inputArcs') inputArcs: Array<ArcInterface>;
+
   Highcharts: typeof Highcharts = Highcharts; // required
+
   chartOptions: Highcharts.Options = {
     credits: {enabled: false},
     chart: {map: mapWorld},
@@ -62,6 +67,8 @@ export class MapchartArcsComponent implements OnInit {
     series: [{name: 'Countries', allAreas: true,} as Highcharts.SeriesMapOptions]
   };
 
+  private actualArcs = [];
+
   constructor() {
   }
 
@@ -69,14 +76,14 @@ export class MapchartArcsComponent implements OnInit {
     this.chart = chart;
 
     const cities = new Set<any>();
-    const tripsArray = [];
-    this.arcs.forEach((arc: ArcInterface) => {
+    this.inputArcs.forEach((arc: ArcInterface) => {
       cities.add(arc.target);
-      this.addTripIfRelevant(tripsArray, arc.origin, arc.target);
+      cities.add(arc.origin);
+      this.addArcIfRelevant(arc.origin, arc.target, arc.color);
     });
 
     this.addCitiesSeries(Array.from(cities));
-    this.addPathsSeries(tripsArray);
+    this.addPathsSeries();
   }
 
   ngOnInit() {
@@ -88,24 +95,25 @@ export class MapchartArcsComponent implements OnInit {
       type: 'mappoint',
       name: 'Cities',
       dataLabels: {
-        format: '{point.id}'
+        format: '{point.id}',
       },
-      data: cities
+      data: cities,
     } as Highcharts.SeriesMappointOptions);
   }
 
-  private addPathsSeries(tripsArray: Array<Path>): void {
+  private addPathsSeries(): void {
     this.chart.addSeries({
       name: 'Flight routes',
       type: 'mapline',
       lineWidth: 2,
-      color: Highcharts.getOptions().colors[3],
-      data: tripsArray,
+      color: Highcharts.getOptions().colors[5],
+      data: this.actualArcs,
     } as Highcharts.SeriesMaplineOptions);
   }
 
-  private addTripIfRelevant(tripsArray: Array<Path>, origin: Point, target: Point): void {
+  private addArcIfRelevant(origin: Point, target: Point, pathColor: string): void {
     if (!origin || origin.id === target.id) {
+      console.log('Got invalid arc, bad origin or origin and target the same');
       return;
     }
     const t = {
@@ -113,8 +121,9 @@ export class MapchartArcsComponent implements OnInit {
       path: MapchartArcsComponent.pointsToPath(
         this.chart.fromLatLonToPoint(origin),
         this.chart.fromLatLonToPoint(target)),
+      color: pathColor,
     };
-    tripsArray.push(t);
+    this.actualArcs.push(t);
   }
 
   private static pointsToPath(from, to, invertArc = false): string {

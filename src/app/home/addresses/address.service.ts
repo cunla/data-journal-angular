@@ -102,12 +102,7 @@ export class AddressService {
   }
 
   private queryFn(ref) {
-    const res = ref;
-    // if (this.query.filter) {
-    //   res = res.where(this.query.field, '>=', this.query.searchValue)
-    //     .where(this.query.field, '<=', this.query.searchValue + '\uf8ff');
-    // }
-    return res
+    return ref
       .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
       .limit(this.query.limit);
   }
